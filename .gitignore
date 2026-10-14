@@ -1,0 +1,8 @@
+.venv/
+.audit/
+artifacts/
+vendor/
+.cache/
+runs/
+__pycache__/
+*.py[cod]
