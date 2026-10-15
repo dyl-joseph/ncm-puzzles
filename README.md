@@ -126,4 +126,19 @@ The [full training guide](docs/latin-training.md) retains the complete published
 
 Training uses the original PyTorch model classes in `vendor/ncm`. The release does not include a trainer. This project adds that loop around the released architecture and published Sudoku settings. New model outputs stay under the chosen run directory. The original Sudoku weights remain in `artifacts/sudoku/hard`.
 
+## Reuse the optimizations on another puzzle
+
+Use the [shared puzzle runner](docs/puzzle-runtime.md) with a task module. The task owns its data, model, loss, scoring, and saved training state. The runner supplies memory guards, duty pacing, checkpoint copies, numerical settings, and resume checks.
+
+The included 4×4 Sudoku task uses the upstream NCM classes with a smaller model and a 16-cell hierarchy. This command starts a demonstration from scratch and evaluates 32 heldout puzzles:
+
+```sh
+.venv/bin/python puzzle_runner.py --task examples.sudoku4_task --device mps \
+	--run runs/sudoku4-demo -- --updates 40 --tokenizer-updates 20 --evaluate
+```
+
+Defaults retain FP32/reference attention, an 8 GiB allocator limit, an 8 GiB RSS guard, a 6 GiB available-memory reserve, and 80% duty pacing. Exact checkpoint copies and pacing are shared. Specialized NCM target reuse and Metal pooling activate only for their verified model and tensor contracts. Other shapes use the task's reference loss.
+
+The [Latin resource guide](docs/latin-resources.md) documents the existing optimized Latin commands. The [continuation guide](docs/latin-continuation.md) covers additional updates with the saved generator and frozen tokenizer.
+
 Created in [T3 Code](https://t3.codes).

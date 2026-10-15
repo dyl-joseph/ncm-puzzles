@@ -23,11 +23,11 @@ The guarded runner paces Apple GPU work and checks memory. The ten-minute wrappe
 
 Preconditions:
 
-- Require `resource_runner.py` for guarded entry points, `run_latin_10min.py` for the fresh wrapper, or `continue_latin.py` for continuation, with their local helper modules. These application files were uncommitted local experiments when this skill was created and are not added by the skill. A checkout without them fails this prerequisite.
+- Require `resource_runner.py` for guarded entry points, `run_latin_10min.py` for the fresh wrapper, or `continue_latin.py` for continuation, with their helper modules.
 - Complete Launch and an MLX Doctor for evaluation or an MPS Doctor for training.
 - Require normal system memory pressure, at least 6 GiB available RAM, and no other accelerator job. The guard can refuse to start based on observed system conditions.
 - `managed-fresh` requires `runs/latin9-scratch/tokenizer/export`, its original 213-update tokenizer with SHA-256 `e7a37a8e46549632314d9031b6bef102521224f94da6b0263936d0391c071b47`, and matching shared `data/latin9`.
-- `managed-continue` requires `runs/latin9-1000`, a matching generator state and export below 1,600 updates, a valid `.train.lock`, saved MPS RNG state, and the same shared corpus. Its source trainer must be stopped.
+- `managed-continue` requires `runs/latin9-1000` or an explicit source with a matching generator state and export, a valid `.train.lock`, saved MPS RNG state, and the same shared corpus. Its source trainer must be stopped.
 - The wrappers' source and corpus paths are fixed defaults or explicit read-only sources. A newly prepared disposable corpus alone does not satisfy those historical prerequisites.
 
 - **Guarded evaluation entry.** Use a fresh output and explicit cache. Require the independent evaluation check plus `resources-evaluate.json` with return code `0`, no resource stop reason, the recorded policy, and generator precision labeled `not_applicable`.
@@ -99,7 +99,7 @@ VERIFY_EVALUATION=$("$VERIFY_PYTHON" -c 'import json,sys; print(json.load(open(s
 - If the selected script or one of its imports is absent, report the missing application file as an unmet prerequisite. The mapped recipe remains unverified. Do not substitute a different entry point or create a stand-in script.
 - Missing historical tokenizer, source run, MPS RNG state, or shared corpus is a failed prerequisite. Do not manufacture those states, edit checksums, or weaken the wrapper checks.
 - `--seconds` includes preparation and training. A short budget may expire before an update and must be reported as a failure. Evaluation after `--evaluate` is outside that budget.
-- The ten-minute wrapper caps its generator at 400 total updates. Continuation adds at most 600 and caps the target at 1,600.
+- The ten-minute wrapper caps its generator at 400 total updates. Continuation defaults to 600 additional updates. `--additional-updates N` sets a fixed target at source updates plus N. Each invocation applies at most 600 updates and resumes the same fixed target.
 - A resource stop is a nonzero failure even when it saved a valid boundary. Check the stop reason and this invocation's status, not only `ready` or file existence.
 - BF16 generator computation defaults to `bf16-math` attention and `metal` frozen pooling. FP32 requires reference attention. Evaluation remains FP32 and reports checkpoint copies as `not_applicable`.
 - Pacing defaults to `idle-credit`. `full-sleep` is a separate supported policy. Checkpoint copies default to `batched`; `blocking` is the reference choice. Resume requires the same recorded policy, precision, attention, pooling, checkpoint copies, and runtime source hashes.

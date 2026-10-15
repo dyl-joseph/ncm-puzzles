@@ -10,7 +10,7 @@ This directory is the maintained source for verifying the Python CLI. Read the m
 - Keep each new output under `$VERIFY_RUN/evidence/artifacts` and each configurable source cache under `$VERIFY_RUN/work`.
 - Frozen evaluation starts with no puzzle data. Corpus preparation downloads the real full collection. Training recipes use that prepared corpus.
 - Apple-specific recipes require MLX Metal or MPS. The ten-minute and continuation wrappers also require saved source runs and the shared `data/latin9` corpus.
-- Managed-experiment scripts are local experimental work at the time this skill was created. This skill does not add those application files. Require the chosen script and its imports to exist before driving that entry point. See [managed-experiment prerequisites](managed-experiments.md).
+- Require the chosen experiment script and its imports before driving that entry point. See [managed-experiment prerequisites](managed-experiments.md).
 - Use one accelerator workload at a time. Do not drive the user's running training job or use its destination as a verification output.
 
 ## Driving conventions
@@ -40,5 +40,6 @@ This directory is the maintained source for verifying the Python CLI. Read the m
 | [Train and resume](training.md) | Tokenizer, generator, `all`, full and pilot configs, saved exports | Real optimizer updates, durable resume, frozen tokenizer, export evaluation |
 | [Run resource-limited experiments](managed-experiments.md) | Guarded train and evaluate, ten-minute fresh generator, continuation and resumes | Resource reports, current ready exports, source preservation, lineage |
 | [Compare MLX and PyTorch](parity.md) | `scripts/verify_mlx.py` | Exact latent and raw IDs plus four solved Sudoku controls |
+| [Run another puzzle task](puzzle-runtime.md) | `puzzle_runner.py`, `scripts/verify_puzzle_runtime.py` | Real 4×4 NCM updates, exact saved resume, reference fallback, independent scorer, memory reports |
 
 Each feature file uses the same four H2s. `Sub-features` names the coverage units, `How to get to it (user POV)` lists entry points, `Driving it with control.py` supplies commands and results, and `Gotchas` records prerequisites and traps.

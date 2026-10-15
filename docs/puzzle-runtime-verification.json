@@ -1,0 +1,122 @@
+{
+  "cpu_exact_ncm_resume": {
+    "changed_resume_preserved_state_and_reports": true,
+    "completed": {
+      "generator": 2,
+      "tokenizer": 2
+    },
+    "device": "cpu",
+    "exact_saved_resume": {
+      "tensors": 264,
+      "values": 2073
+    },
+    "independent_scorer_checked": true,
+    "reference_fallback": true,
+    "verified": true
+  },
+  "format": "puzzle-runtime-verification-v1",
+  "legacy_source_sha256_unchanged": {
+    "continue_latin.py": "79507f110cf5562bb546f61d12e481893ea392554e47da8b3442e69a62a51012",
+    "ncm_area_pool.py": "2f0b6c04414a0d34297609dcd6690015a4d285abd406c05d27749ac24cd0d1f6",
+    "ncm_attention.py": "269b06bff2ddd37593d1a5afaaffa14fe6affdf19204013c0810eda00633d2b0",
+    "ncm_checkpoint.py": "221dc35e704917383248191586c1bfb2a013a74fdb8c61e9630ac4e2701bb364",
+    "ncm_fast_targets.py": "c14744089b26241cdbd4caf3c2f01d3c14915279c51306e247a2b5b82cb58106",
+    "ncm_mlx.py": "fd0a219bc8529756950659ca8cb515a3429b12e122a04ce6b7d46827b31d6d9f",
+    "ncm_resource.py": "dae820a9a92783c97b9bc5b7c7907fc03f9423ff16aa27fb9c27c7a62b2c3839",
+    "ncm_torch_ops.py": "bed693cc49e8070f10bf7814e946f25a034dd641534a8a3e5f29c32f74a446be",
+    "resource_runner.py": "65521baf43d2d283d83b30318b4e66f3d206867be30096c1982f15340183f056",
+    "run_latin_10min.py": "150858975969bb0eaa4af93dc0706fc88b64576f5fc0e292b72b398be32f1bf2",
+    "train_latin.py": "667624987731f4627bdceb28c7180b1236f60e7871a7973bd08ceee7760e995b"
+  },
+  "limitations": [
+    "A new puzzle needs a task adapter and independent scorer.",
+    "Specialized kernels retain narrow model, objective and tensor contracts.",
+    "Two updates are execution proof, not solve-quality or speedup evidence.",
+    "The runtime paces the process; it does not impose a system-wide GPU cap or prevent other apps from writing swap."
+  ],
+  "mlx_native_materialization_smoke": {
+    "resources": {
+      "backend": "mlx",
+      "new_pageout_bytes": 0,
+      "new_swapout_bytes": 0,
+      "peak_gpu_allocated_bytes": 2264,
+      "peak_rss_bytes": 45760512,
+      "stop_reason": null,
+      "work_duty_cycle": 0.7728603130430289,
+      "work_units": 2
+    },
+    "returncode": 0,
+    "scope": "Native MLX API, materialization and guard smoke only. No NCM or kernel equivalence claim.",
+    "status": "completed",
+    "task_result": {
+      "completed": 2,
+      "losses": [
+        2.109522581100464,
+        2.1089375019073486
+      ],
+      "materialized_in_work_unit": true
+    }
+  },
+  "mps_exact_resume_limitation": {
+    "differing_parameter": "generator.transformer.wle.weight",
+    "differing_weight_elements": 1,
+    "identical_input_embedding_backward": {
+      "False": {
+        "distinct_byte_patterns": 30,
+        "max_abs_difference": 1.430511474609375e-06
+      },
+      "True": {
+        "distinct_byte_patterns": 30,
+        "max_abs_difference": 1.9073486328125e-06
+      }
+    },
+    "maximum_absolute_weight_difference": 5.960464477539063e-08,
+    "policy": "No gradient operation was replaced. CPU exact proof and MPS execution are separate claims. MPS strict comparison remains strict.",
+    "strict_comparison": "failed",
+    "unchanged": "Tokenizer, all other generator weights, sampler and RNG matched bytes."
+  },
+  "mps_real_ncm_smoke": {
+    "completed": {
+      "generator": 2,
+      "tokenizer": 2
+    },
+    "evaluated": 32,
+    "loss_implementation": "reference",
+    "resources": {
+      "backend": "mps",
+      "new_pageout_bytes": 0,
+      "new_swapout_bytes": 0,
+      "peak_gpu_allocated_bytes": 22003712,
+      "peak_rss_bytes": 581107712,
+      "stop_reason": null,
+      "work_duty_cycle": 0.6548827709143559,
+      "work_units": 12
+    },
+    "returncode": 0,
+    "solved": 0,
+    "status": "completed"
+  },
+  "new_source_sha256": {
+    "examples/sudoku4_task.py": "eed349c53a6b283e6fdd94d2e58579c3eec52ab25bcf0cfaf42ff4d9ed85d520",
+    "puzzle_ncm.py": "049b1cdf635b0e6b0f54aae7279a046a8a6647aa73c7e15cc03daba210e64950",
+    "puzzle_runner.py": "816fb81b849445fc49fc8be2fe0e8ed1b2517a14cd1e013093843e0ac7d3224c",
+    "puzzle_runtime.py": "575b21903cd2c620f09a7b9adf8d0c4a9f591ecd6355ef3f80f839dff6e42066",
+    "scripts/verify_puzzle_runtime.py": "f4e890254b8156c1ec0e410236fac48aa269fb4af42045735037711b7606ed4b"
+  },
+  "platform": {
+    "machine": "arm64",
+    "release": "27.0.0",
+    "system": "Darwin"
+  },
+  "reproduce_cpu_exact": ".venv/bin/python scripts/verify_puzzle_runtime.py --device cpu --output runs/puzzle-runtime-verification",
+  "reproduce_mps_smoke": ".venv/bin/python puzzle_runner.py --task examples.sudoku4_task --device mps --run runs/sudoku4-smoke -- --updates 2 --tokenizer-updates 2 --batch-size 4 --checkpoint-every 1 --evaluate",
+  "unit_tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "errors": 0,
+    "failures": 0,
+    "log_sha256": "fcde3973024734d249c386f76a5de778c4185034a8a2dde51ecb087fae89d4e9",
+    "passed": 218,
+    "skipped": 0
+  },
+  "verified_at_utc": "2026-10-15T14:13:08.738529+00:00"
+}

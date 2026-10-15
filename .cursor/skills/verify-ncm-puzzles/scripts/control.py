@@ -32,6 +32,8 @@ ENTRY_POINTS = {
     "run_latin_10min.py": "--run",
     "continue_latin.py": "--run",
     "scripts/verify_mlx.py": "--output",
+    "puzzle_runner.py": "--run",
+    "scripts/verify_puzzle_runtime.py": "--output",
 }
 
 
@@ -49,7 +51,7 @@ def write_json(path, value):
 
 
 def source_hashes():
-    paths = [*ROOT.glob("*.py"), *ROOT.glob("scripts/*.py"),
+    paths = [*ROOT.glob("*.py"), *ROOT.glob("scripts/*.py"), *ROOT.glob("examples/*.py"),
              *ROOT.glob("configs/*.yaml"), ROOT / "requirements.txt"]
     return {str(path.relative_to(ROOT)): digest(path) for path in sorted(paths)}
 
@@ -149,7 +151,7 @@ def isolated_arguments(directory, arguments):
     writable = ("--output", "--run", "--cache-dir", "--resource-report")
     for argument in options:
         option = argument.split("=", 1)[0]
-        if option.startswith("--") and option not in writable and any(flag.startswith(option) for flag in writable):
+        if option != "--" and option.startswith("--") and option not in writable and any(flag.startswith(option) for flag in writable):
             raise ValueError("Use full names for writable destination flags.")
     for flag in writable:
         for value in values(options, flag):
