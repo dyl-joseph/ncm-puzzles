@@ -1,6 +1,7 @@
 .venv/
 .audit/
 artifacts/
+data/
 vendor/
 .cache/
 runs/
