@@ -1,0 +1,39 @@
+architecture: vendor/ncm/config/eval/sudoku-hard.yaml
+seed: 42
+clue_count: 30
+augment: true
+optimizer:
+  name: AdamW
+  betas: [0.9, 0.99]
+  weight_decay: 0.01
+  epsilon: 1.0e-8
+  decay_grouping: matrix_parameters_only
+clip_norm: 1.0
+schedule: linear_warmup_cosine
+checkpoint_every: 100
+validation_every: 1000
+validation_count: 100
+tokenizer:
+  updates: 10000
+  batch_size: 1024
+  peak_lr: 5.0e-4
+  floor_lr: 5.0e-5
+  warmup_updates: 500
+generator:
+  updates: 50000
+  batch_size: 1024
+  microbatch_size: 32
+  peak_lr: 3.0e-4
+  floor_lr: 3.0e-5
+  warmup_updates: 1000
+  level_weight_alpha: 0.0
+  corruption_rates: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+local_choices:
+  initialization: both_stages_from_scratch
+  schedule: linear_warmup_then_cosine_to_published_floor
+  optimizer_epsilon: 1.0e-8
+  decay_grouping: trainable_parameters_with_ndim_at_least_two
+  generator_objective: mean_cross_entropy_over_all_322_clean_codes
+  corruption: disabled_because_sudoku_rates_are_not_published
+  data: fresh_30_clue_masks_and_independent_row_column_symbol_permutations
+  platform: float32_eager_on_all_backends_bf16_compile_not_enabled
