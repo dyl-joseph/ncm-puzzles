@@ -1,0 +1,79 @@
+{
+  "controls": [
+    {
+      "index": 0,
+      "tokens": [
+        25,
+        1,
+        1,
+        28,
+        25,
+        25,
+        1,
+        25,
+        25,
+        25,
+        1,
+        1
+      ]
+    },
+    {
+      "index": 1,
+      "tokens": [
+        27,
+        1,
+        1,
+        27,
+        1,
+        1,
+        28,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "index": 2,
+      "tokens": [
+        27,
+        1,
+        1,
+        26,
+        1,
+        1,
+        1,
+        1,
+        25,
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "index": 3,
+      "tokens": [
+        28,
+        1,
+        1,
+        28,
+        1,
+        1,
+        1,
+        25,
+        25,
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "fixture_sha256": "5c064ad40c73d85c934a41493215897156e1471433dfff05a277ca529088341b",
+  "metadata_sha256": "f733a228e3f4232d96ea5ee1eb3ac26835b9a52df0afada03b29ac62b3f3ec8c",
+  "purpose": "Checkpoint reload consistency, not a performance score",
+  "weight_sha256": {
+    "generator.safetensors": "865332ef535c1d2722639c588a4ee355a1718e98c6b2d846d65925b6e900c958",
+    "tokenizer.safetensors": "0fa662e97fc511e6deb21196e16604873281c3c4a7d9c757bf5807286da8cc5c"
+  }
+}

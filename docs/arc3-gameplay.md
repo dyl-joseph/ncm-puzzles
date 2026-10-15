@@ -4,6 +4,8 @@ The trained pilot completed **0 of 183 levels across 25 public games**, for **0.
 
 The earlier 62.8% result measured the next human command on held-out replay inputs. It was not a gameplay score. The claim that it showed promising ARC-AGI-3 capability was too strong.
 
+This report preserves the original imitation checkpoint's evaluation. A subsequent [actual-game training pilot](arc3-gameplay-training.md) made 644 generator updates within ten minutes, then also scored zero on the frozen 25-game test. The [competition target](arc3-competition-target.md) describes the Kaggle leaderboard and submission requirements.
+
 ## Actual gameplay
 
 | Policy | Human-relative score | Levels | Complete games | Submitted actions |

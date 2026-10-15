@@ -8,7 +8,7 @@ Evaluate the published frozen NCM Sudoku checkpoint on 100 order-9 Latin-square 
 
 The [training pipeline](docs/latin-training.md) also trains a new Latin model from scratch with the released NCM architecture.
 
-The [ARC-AGI-3 gameplay experiment](docs/arc3-gameplay.md) evaluates a small frozen MLX pilot in all 25 public games. It completed 0 of 183 levels. The [runnable evaluator](arc3/README.md) includes the checkpoint, matched game revisions, baselines and per-game results.
+The [ARC-AGI-3 gameplay experiment](docs/arc3-gameplay.md) evaluates a small frozen MLX pilot in all 25 public games. A subsequent [9m35s gameplay training run](docs/arc3-gameplay-training.md) made 644 optimizer updates using real game feedback. Both frozen checkpoints completed 0 of 183 levels. The [runnable training and evaluation guide](arc3/README.md) includes the checkpoints, matched game revisions, baselines and per-game results. The [competition target](docs/arc3-competition-target.md) distinguishes these development results from the Kaggle leaderboard.
 
 Run from this directory with the prepared environment and checkpoint:
 

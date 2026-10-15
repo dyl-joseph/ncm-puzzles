@@ -77,6 +77,7 @@ def observation_view(observation):
 
 class MLXWorker:
     def __init__(self, output, mlx_python, checkpoint):
+        self.checkpoint = checkpoint.resolve()
         self.error_file = (output / "worker.stderr.log").open("w")
         self.process = subprocess.Popen(
             [str(mlx_python), str(HERE / "mlx_worker.py"), "--checkpoint", str(checkpoint.resolve())],
@@ -116,6 +117,28 @@ class MLXWorker:
 def verify_adapter(worker):
     from types import SimpleNamespace
     fixture = json.loads((HERE / "fixtures/replay_controls.json").read_text())
+    expected = {control["index"]: control["expected_tokens"] for control in fixture["controls"]}
+    control_source = "original_pretrained_checkpoint"
+    checkpoint = getattr(worker, "checkpoint", None)
+    if checkpoint is not None and (checkpoint / "inference_controls.json").exists():
+        saved = json.loads((checkpoint / "inference_controls.json").read_text())
+        if saved["fixture_sha256"] != digest(HERE / "fixtures/replay_controls.json"):
+            raise AssertionError("Checkpoint inference controls use a different encoding fixture")
+        hashes = {name: digest(checkpoint / name)
+                  for name in ("tokenizer.safetensors", "generator.safetensors")}
+        if saved["weight_sha256"] != hashes or saved["weight_sha256"] != worker.ready["weight_sha256"]:
+            raise AssertionError("Checkpoint inference controls use different weights")
+        if saved["metadata_sha256"] != digest(checkpoint / "metadata.json"):
+            raise AssertionError("Checkpoint inference controls use different metadata")
+        controls = saved["controls"]
+        expected = {control["index"]: control["tokens"] for control in controls}
+        if len(controls) != len(fixture["controls"]) or set(expected) != {control["index"] for control in fixture["controls"]}:
+            raise AssertionError("Checkpoint inference controls do not cover the fixed fixtures")
+        if any(not isinstance(tokens, list) or len(tokens) != 12 or
+               any(type(token) is not int or not 0 <= token < 160 for token in tokens)
+               for tokens in expected.values()):
+            raise AssertionError("Malformed checkpoint inference control prediction")
+        control_source = "checkpoint_reload_consistency"
     checks = []
     for control in fixture["controls"]:
         observation = SimpleNamespace(frame=[control["frame"]],
@@ -125,11 +148,13 @@ def verify_adapter(worker):
         if prefix != control["prefix"] or info["prefix_sha256"] != control["prefix_sha256"]:
             raise AssertionError(f"Prefix differs at replay control {control['index']}")
         result = worker.infer(prefix)
-        if result.get("tokens") != control["expected_tokens"]:
+        if result.get("tokens") != expected[control["index"]]:
             raise AssertionError(f"Prediction differs at replay control {control['index']}")
         checks.append({"index": control["index"], "event_guid": control["event_guid"],
                        "prefix_exact": True, "prediction_exact": True})
     return {"status": "PASS", "checks": checks, "cold_start_history": [[0, 0, 0]] * 4,
+            "prediction_control_source": control_source,
+            "prediction_controls_are_performance_scores": False,
             "fixture_sha256": digest(HERE / "fixtures/replay_controls.json")}
 
 
@@ -160,6 +185,9 @@ def play(arcade, info, card_id, args, worker, emit):
         environment = arcade.make(info.game_id, seed=args.seed, scorecard_id=card_id)
         if environment is None or environment.observation_space is None:
             raise RuntimeError("SDK failed to initialize/reset the environment")
+        if environment.renderer is not None:
+            raise RuntimeError("Evaluation environment unexpectedly enabled rendering")
+        episode["renderer_is_none"] = True
         observation = environment.observation_space
         before = observation_view(observation)
         emit({"event": "initial_reset", "game_id": info.game_id, "action": {"action_id": 0, "data": {}},
@@ -355,6 +383,7 @@ def main():
                                       "repeat": "repeat own command; initialize smallest legal action, center click"}[args.policy],
                "created_at": datetime.now(timezone.utc).isoformat(), "seed": args.seed,
                "subset_smoke": args.games is not None, "network_disabled": True,
+               "all_created_games_headless": all(row.get("renderer_is_none") for row in episodes),
                "multiplier": args.multiplier, "max_runtime_seconds_per_game": MAX_RUNTIME_SECONDS,
                "baseline_source": {"path": str(baseline_path), "sha256": digest(baseline_path),
                                    "provenance": baseline_provenance},

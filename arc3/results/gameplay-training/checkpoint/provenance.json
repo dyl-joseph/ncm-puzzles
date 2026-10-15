@@ -1,0 +1,59 @@
+{
+  "baseline": -0.307039510191726,
+  "cpu_neural_training": false,
+  "description": "Actual-game LS20 on-policy REINFORCE pilot, not a leaderboard submission",
+  "frozen_tokenizer": true,
+  "generator_changed_tensor_count": 44,
+  "generator_parameter_delta_l2": 3.373645305633545,
+  "initial_checkpoint": "arc3/checkpoints/ls20-10min",
+  "initial_weight_sha256": {
+    "generator.safetensors": "c1c150ce1a310c5139e6c260bd078d3d9a6e0c0cdda98fa0db64588e962f4d18",
+    "tokenizer.safetensors": "0fa662e97fc511e6deb21196e16604873281c3c4a7d9c757bf5807286da8cc5c"
+  },
+  "maximum_training_seconds": 600,
+  "objective": "REINFORCE sum gamma^t*(G_t-baseline_previous)*joint_22_code_log_probability /128",
+  "policy_version": 644,
+  "reward": "visible completed levels; -1 invalid action; -1 visible GAME_OVER",
+  "sampling_parity": {
+    "before_any_optimizer_update": true,
+    "code_count": 22,
+    "joint_log_probability_error": 0.0,
+    "max_logit_error": 0.0,
+    "temperature": 1.5
+  },
+  "sampling_temperature": 1.5,
+  "stats": {
+    "aborted_episode_decisions": 0,
+    "active_seconds": 393.2439066641382,
+    "baseline_only_updates": 145,
+    "cpu_neural_inference": false,
+    "cpu_neural_training": false,
+    "device": "Device(gpu, 0)",
+    "discarded_partial_updates": 1,
+    "duty_is_soft_pacing": true,
+    "duty_target": 0.8,
+    "first_nonzero_gradient_norm": 4.370602130889893,
+    "gradient_microbatches": 9014,
+    "idle_seconds": 122.31339875502454,
+    "inference_control_calls": 44,
+    "initial_weight_sha256": {
+      "generator.safetensors": "c1c150ce1a310c5139e6c260bd078d3d9a6e0c0cdda98fa0db64588e962f4d18",
+      "tokenizer.safetensors": "0fa662e97fc511e6deb21196e16604873281c3c4a7d9c757bf5807286da8cc5c"
+    },
+    "latest_gradient_norm": 1.7604880332946777,
+    "mlx_version": "0.32.4",
+    "optimizer_updates": 644,
+    "reward_driven_updates": 499,
+    "sample_calls": 35355,
+    "saved_checkpoints": 10,
+    "torch_imported": false,
+    "zero_gradient_episodes": 0
+  },
+  "training_backend": "MLX GPU",
+  "training_game": "ls20",
+  "training_kind": "actual_game_policy_gradient",
+  "weight_sha256": {
+    "generator.safetensors": "865332ef535c1d2722639c588a4ee355a1718e98c6b2d846d65925b6e900c958",
+    "tokenizer.safetensors": "0fa662e97fc511e6deb21196e16604873281c3c4a7d9c757bf5807286da8cc5c"
+  }
+}
