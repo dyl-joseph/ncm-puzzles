@@ -1,0 +1,70 @@
+{
+  "checks": {
+    "both_stages_save_and_resume": true,
+    "existing_stopped_full_run_trainer_hash_unchanged": true,
+    "frozen_tokenizer_hash_unchanged": true,
+    "optimizer_steps_and_sampler_cursors_match": true,
+    "original_source_and_sudoku_weights_unchanged": true,
+    "pilot_budget_and_warmup_in_export_provenance": true,
+    "previous_full_recipe_exports_validate": true,
+    "warmup_learning_rates_match": true
+  },
+  "generator": {
+    "completed_verification_updates": 2,
+    "global_batch": 1024,
+    "intended_updates": 200,
+    "measured_seconds_per_update": [
+      25.395872917000816,
+      25.85822041600113
+    ],
+    "microbatch": 32,
+    "warmup_updates": 20
+  },
+  "mlx_evaluation": {
+    "cases_sha256": "90408a113e7bb320b345327fd5623b6b818db544047a069dce6fc744451a15af",
+    "completed": 100,
+    "metrics": {
+      "given_cell_agreement": 0.0,
+      "given_cells_correct": 0,
+      "given_cells_total": 3000,
+      "scored": 100,
+      "solve_rate": 0.0,
+      "solved": 0,
+      "validity_rates": {
+        "clues_preserved": 0.0,
+        "columns_valid": 0.0,
+        "digits_valid": 0.0,
+        "rows_valid": 0.0,
+        "shape_valid": 0.0,
+        "sudoku_boxes_valid": 0.0
+      }
+    },
+    "provenance_sha256": "479dccaa7b5c0f7edf0d36b321c2f5dec572293f7ce9416afdb00d2a7de92107",
+    "split": "test",
+    "status": "complete"
+  },
+  "preset": "configs/latin9-pilot.yaml",
+  "preset_sha256": "e8ea9daf0bf20abe6661d0ab3dfb9ea114a0421f9f4e4bdf06643ffcd7a6227f",
+  "recorded_at": "2026-10-15T00:37:01.902605+00:00",
+  "rough_eta": {
+    "method": "Extrapolation from two bounded invocations per stage, each with one real update and a requested-stop checkpoint. Startup excluded; no completed pilot measurement. Periodic validation and sustained thermal behavior remain unmeasured.",
+    "minutes": 98.32344652582226
+  },
+  "scope": "The shorter runtime comes from fewer training updates. Architecture, global batch, optimizer, objective, FP32 execution, and trainer source remain unchanged. The two-update smoke model does not measure pilot quality.",
+  "tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "failed": 0,
+    "passed": 69
+  },
+  "tokenizer": {
+    "completed_verification_updates": 2,
+    "intended_updates": 500,
+    "measured_seconds_per_update": [
+      1.5511788749972766,
+      1.5448109579992888
+    ],
+    "physical_batch": 1024,
+    "warmup_updates": 25
+  },
+  "trainer_sha256": "667624987731f4627bdceb28c7180b1236f60e7871a7973bd08ceee7760e995b"
+}

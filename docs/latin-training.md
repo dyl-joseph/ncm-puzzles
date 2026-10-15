@@ -31,6 +31,8 @@ The historical benchmark preserves the original 100 puzzles and their 25, 37, 49
 
 ## Train both stages
 
+For a first experiment with a one to two hour budget, use the [pilot recipe](latin-pilot.md). The command below uses the full 10,000-update tokenizer and 50,000-update generator schedule.
+
 ```sh
 caffeinate -i .venv/bin/python train_latin.py all --data data/latin9 --run runs/latin9-scratch --device mps
 ```

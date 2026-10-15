@@ -326,9 +326,15 @@ def verify_setup(checkpoint_dir: Path, device: str = "cpu") -> dict:
 
 
 def training_stage_deviations(spec: dict) -> list[str]:
-    return ["float32 eager execution replaces the published BF16 compiled execution"] + (
-        [f"global batch {spec['batch_size']} replaces published batch 1024"]
-        if spec["batch_size"] != 1024 else [])
+    published_updates, published_warmup = {"tokenizer": (10000, 500), "generator": (50000, 1000)}[spec["name"]]
+    deviations = ["float32 eager execution replaces the published BF16 compiled execution"]
+    if spec["batch_size"] != 1024:
+        deviations.append(f"global batch {spec['batch_size']} replaces published batch 1024")
+    if spec["updates"] != published_updates:
+        deviations.append(f"{spec['updates']} optimizer updates replace published {published_updates}")
+    if spec["warmup_updates"] != published_warmup:
+        deviations.append(f"{spec['warmup_updates']} warmup updates replace published {published_warmup}")
+    return deviations
 
 
 def verify_training_stage_spec(spec: dict, deviations: list[str], recipe: dict, stage: str):

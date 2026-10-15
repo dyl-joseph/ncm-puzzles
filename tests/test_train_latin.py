@@ -136,9 +136,78 @@ class TrainingBehaviorTests(unittest.TestCase):
             metadata = evaluation.verify_local_export(export, stage=stage)
             self.assertEqual(metadata["checkpoint"]["training"]["tokenizer_updates"], 2)
             self.assertEqual(metadata["checkpoint"]["data"]["manifest_sha256"], self.corpus.manifest_sha256)
+            self.assertEqual(metadata["checkpoint"]["training"]["deviations"], [
+                "float32 eager execution replaces the published BF16 compiled execution",
+                "global batch 2 replaces published batch 1024",
+            ])
             exported = torch.load(export / f"{stage}.pt", map_location="cpu", weights_only=True)
             saved = torch.load(self.runs[0] / stage / "state.pt", map_location="cpu", weights_only=True)
             assert_tree_equal(self, exported["model"], saved["model"])
+
+    def test_pilot_schedule_survives_bounded_training_exports_reload_and_resume(self):
+        run = self.root / "pilot"
+        config = str(training.ROOT / "configs/latin9-pilot.yaml")
+        local_choices = {
+            "training_budget": "local_pilot_500_tokenizer_and_200_generator_updates",
+            "warmup": "rescaled_for_pilot_25_tokenizer_and_20_generator_updates",
+        }
+        for stage, updates, warmup, first_lr, floor_lr, options in (
+            ("tokenizer", 500, 25, 2e-5, 5e-5, ()),
+            ("generator", 200, 20, 1.5e-5, 3e-5,
+             ("--microbatch-size", "1", "--allow-partial-tokenizer")),
+        ):
+            self.invoke(stage, run, "--config", config, "--batch-size", "2", "--stop-after", "1", *options)
+            state = torch.load(run / stage / "state.pt", map_location="cpu", weights_only=True)
+            spec = state["immutable"]["stage"]
+            self.assertEqual(state["completed_updates"], 1)
+            self.assertEqual((spec["updates"], spec["warmup_updates"]), (updates, warmup))
+            self.assertAlmostEqual(state["optimizer"]["param_groups"][0]["lr"], first_lr)
+            schedule = training.StageSpec(**spec)
+            self.assertEqual(training.learning_rate(schedule, updates), floor_lr)
+            self.assertEqual(training.learning_rate(schedule, warmup), spec["peak_lr"])
+            self.assertGreater(training.learning_rate(schedule, 2), first_lr)
+            immutable = state["immutable"]
+            del state
+            self.invoke(stage, run, "--config", config, "--resume", "--stop-after", "1", *options)
+            state = torch.load(run / stage / "state.pt", map_location="cpu", weights_only=True)
+            self.assertEqual(state["completed_updates"], 2)
+            self.assertEqual(state["immutable"], immutable)
+            self.assertAlmostEqual(state["optimizer"]["param_groups"][0]["lr"], first_lr * 2)
+            export = run / stage / "export"
+            metadata = evaluation.verify_local_export(export, stage=stage)["checkpoint"]["training"]
+            self.assertEqual(metadata["stage_spec"], spec)
+            self.assertEqual((metadata["tokenizer_intended_updates"], metadata["generator_intended_updates"]),
+                             (500, 200))
+            self.assertEqual(metadata["deviations"], [
+                "float32 eager execution replaces the published BF16 compiled execution",
+                "global batch 2 replaces published batch 1024",
+                f"{updates} optimizer updates replace published {10000 if stage == 'tokenizer' else 50000}",
+                f"{warmup} warmup updates replace published {500 if stage == 'tokenizer' else 1000}",
+            ])
+            recipe = json.loads((export / "run-config.json").read_text())["recipe"]
+            self.assertEqual(recipe[stage]["updates"], updates)
+            self.assertEqual(recipe[stage]["warmup_updates"], warmup)
+            self.assertEqual(recipe[stage]["batch_size"], 1024)
+            self.assertEqual(metadata["local_choices"], recipe["local_choices"])
+            for key, value in local_choices.items():
+                self.assertEqual(metadata["local_choices"][key], value)
+            exported = torch.load(export / f"{stage}.pt", map_location="cpu", weights_only=True)
+            assert_tree_equal(self, exported["model"], state["model"])
+            if stage == "generator":
+                snapshot = metadata["tokenizer_snapshot"]
+                self.assertEqual((snapshot["completed_updates"], snapshot["intended_updates"]), (2, 500))
+                self.assertEqual(snapshot["stage_spec"]["warmup_updates"], 25)
+                self.assertIn("500 optimizer updates replace published 10000", snapshot["deviations"])
+                self.assertIn("25 warmup updates replace published 500", snapshot["deviations"])
+            del state, exported
+        destination = self.root / "pilot-evaluation"
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            result = evaluation.main(["--local-checkpoint", str(run / "generator/export"),
+                                      "--data", str(self.corpus.directory), "--split", "test", "--count", "2",
+                                      "--device", "cpu", "--output", str(destination)])
+        summary = json.loads((destination / "summary.json").read_text())
+        self.assertEqual(result, 0, summary)
+        self.assertEqual((summary["status"], summary["completed"]), ("complete", 2))
 
     def test_partial_tokenizer_requires_explicit_bounded_generator_run(self):
         with self.assertRaisesRegex(ValueError, "partial tokenizer requires"):
