@@ -115,12 +115,14 @@ The tests cover valid non-Sudoku Latin completions, alternative solutions, chang
 
 ## Train Latin models
 
-The [Latin training guide](docs/latin-training.md) describes the full corpus, the two-stage recipe, checkpoint resume, and short execution checks.
+Start with the [one to two hour pilot](docs/latin-pilot.md). It trains both stages from scratch with a smaller update budget.
 
 ```sh
 .venv/bin/python prepare_latin.py --output data/latin9
-.venv/bin/python train_latin.py all --data data/latin9 --run runs/latin9-scratch --device mps
+caffeinate -i .venv/bin/python train_latin.py all --config configs/latin9-pilot.yaml --data data/latin9 --run runs/latin9-pilot --device mps
 ```
+
+The [full training guide](docs/latin-training.md) retains the complete published update budget. Its current Mac runtime estimate is about 15 days.
 
 Training uses the original PyTorch model classes in `vendor/ncm`. The release does not include a trainer. This project adds that loop around the released architecture and published Sudoku settings. New model outputs stay under the chosen run directory. The original Sudoku weights remain in `artifacts/sudoku/hard`.
 
