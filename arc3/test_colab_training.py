@@ -1,6 +1,8 @@
 """Exercise restart, archive and notebook contracts without training or a GPU."""
 
 from dataclasses import replace
+from contextlib import redirect_stdout
+import io
 import json
 import os
 from pathlib import Path
@@ -223,6 +225,15 @@ class ColabRunTests(unittest.TestCase):
         pid = int(pid_file.read_text())
         with self.assertRaises(ProcessLookupError):
             os.kill(pid, 0)
+
+    def test_child_failure_reaches_notebook_stdout_and_exception(self):
+        output = io.StringIO()
+        code = "import os; os.write(1, b'child stdout\\n'); os.write(2, b'child stderr'); raise SystemExit(3)"
+        with redirect_stdout(output):
+            with self.assertRaises(RuntimeError) as failure:
+                run_process([sys.executable, "-c", code], timeout=5)
+        self.assertIn("child stdout\nchild stderr", output.getvalue())
+        self.assertIn("child stdout\nchild stderr", str(failure.exception))
 
     def test_descendant_is_stopped_after_leader_exits(self):
         for exit_code in (0, 2):
