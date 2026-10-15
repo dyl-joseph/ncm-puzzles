@@ -41,6 +41,10 @@ def digest(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def interrupt_on_signal(*_):
+    raise KeyboardInterrupt
+
+
 def transition_reward(before, after=None, *, invalid=False):
     if invalid and after is not None:
         raise ValueError("An invalid action cannot have a game response")
@@ -357,17 +361,28 @@ def main():
                "--coordinator", "--deadline", str(deadline)]
     process = subprocess.Popen(command, start_new_session=True)
     timed_out = False
+    interrupted = False
+    previous_handler = signal.signal(signal.SIGTERM, interrupt_on_signal)
     try:
         process.wait(timeout=max(0.001, deadline - time.monotonic()))
     except subprocess.TimeoutExpired:
         timed_out = True
-        os.killpg(process.pid, signal.SIGKILL)
-        process.wait()
-    elapsed = time.monotonic() - start
-    write_json(args.output / "deadline-result.json", {
-        "max_seconds": args.max_seconds, "wall_seconds": elapsed, "hard_timeout": timed_out,
-        "training_process_group_stopped": True, "exit_code": process.returncode,
-        "includes_initialization_sampling_gradient_work_save_shutdown": True})
+    except BaseException:
+        interrupted = True
+        raise
+    finally:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        if process.poll() is None:
+            process.wait()
+        signal.signal(signal.SIGTERM, previous_handler)
+        elapsed = time.monotonic() - start
+        write_json(args.output / "deadline-result.json", {
+            "max_seconds": args.max_seconds, "wall_seconds": elapsed, "hard_timeout": timed_out,
+            "interrupted": interrupted, "training_process_group_stopped": True, "exit_code": process.returncode,
+            "includes_initialization_sampling_gradient_work_save_shutdown": True})
     if process.returncode:
         raise SystemExit(process.returncode if process.returncode > 0 else 1)
 

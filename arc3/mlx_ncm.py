@@ -55,9 +55,18 @@ CONFIG = {
 }
 
 
+def gpu_backend():
+    for name in ("cuda", "metal"):
+        backend = getattr(mx, name, None)
+        if backend is not None and backend.is_available():
+            return name
+    raise RuntimeError("MLX needs a working CUDA or Metal GPU; CPU neural fallback is disabled")
+
+
 def validate_device():
-    if not mx.metal.is_available() or mx.default_device() != mx.gpu:
-        raise RuntimeError("This experiment requires MLX Metal GPU as the default device")
+    gpu_backend()
+    if mx.default_device() != mx.gpu:
+        raise RuntimeError("MLX GPU must be the default device; CPU neural fallback is disabled")
     return str(mx.default_device())
 
 

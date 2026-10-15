@@ -19,11 +19,11 @@ import mlx.optimizers as optim
 from mlx.utils import tree_flatten, tree_map
 
 if __package__:
-    from .mlx_ncm import Generator, Tokenizer, LEVELS, WIDTH, area_down, linear_up
+    from .mlx_ncm import Generator, Tokenizer, LEVELS, WIDTH, area_down, linear_up, validate_device
     from .train_gameplay import (BASELINE_DECAY, EpisodeBuffer, HORIZON, SAVE_RESERVE_SECONDS,
                                  TEMPERATURE, digest, discounted_weights, write_json)
 else:
-    from mlx_ncm import Generator, Tokenizer, LEVELS, WIDTH, area_down, linear_up
+    from mlx_ncm import Generator, Tokenizer, LEVELS, WIDTH, area_down, linear_up, validate_device
     from train_gameplay import (BASELINE_DECAY, EpisodeBuffer, HORIZON, SAVE_RESERVE_SECONDS,
                                 TEMPERATURE, digest, discounted_weights, write_json)
 
@@ -47,8 +47,7 @@ class GameplayTrainer:
         if self.metadata["vocab_size"] != 160 or self.metadata["prefix_len"] != 1142:
             raise ValueError("Checkpoint differs from the unchanged LS20 adapter")
         mx.set_default_device(mx.gpu)
-        if not mx.metal.is_available() or mx.default_device() != mx.gpu:
-            raise RuntimeError("MLX GPU is required; CPU neural computation is forbidden")
+        validate_device()
         mx.random.seed(args.seed)
         start = time.monotonic()
         self.tokenizer = Tokenizer(self.metadata["vocab_size"])

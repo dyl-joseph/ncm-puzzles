@@ -13,9 +13,9 @@ import time
 
 import mlx.core as mx
 if __package__:
-    from .mlx_ncm import Generator, Tokenizer
+    from .mlx_ncm import Generator, Tokenizer, validate_device
 else:
-    from mlx_ncm import Generator, Tokenizer
+    from mlx_ncm import Generator, Tokenizer, validate_device
 
 
 def emit(value):
@@ -31,8 +31,7 @@ def main():
     if metadata["vocab_size"] != 160 or metadata["prefix_len"] != 1142:
         raise ValueError("Checkpoint metadata differs from the frozen LS20 adapter")
     mx.set_default_device(mx.gpu)
-    if not mx.metal.is_available() or mx.default_device() != mx.gpu:
-        raise RuntimeError("MLX GPU is required; CPU neural inference is forbidden")
+    validate_device()
     tokenizer = Tokenizer(metadata["vocab_size"])
     tokenizer.load_weights(str(checkpoint / "tokenizer.safetensors"))
     tokenizer.eval()
