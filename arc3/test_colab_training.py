@@ -23,6 +23,7 @@ class FakeBlock:
     def __init__(self):
         self.calls = []
         self.reject_verification = False
+        self.no_update_calls = set()
 
     def __call__(self, command, **_):
         self.calls.append(command)
@@ -33,16 +34,23 @@ class FakeBlock:
         checkpoint.mkdir()
         for name in CHECKPOINT_FILES:
             (checkpoint / name).write_bytes((initial / name).read_bytes())
-        with (checkpoint / "generator.safetensors").open("ab") as stream:
-            stream.write(str(len(self.calls)).encode())
+        updates = int(len(self.calls) not in self.no_update_calls)
+        if updates:
+            with (checkpoint / "generator.safetensors").open("ab") as stream:
+                stream.write(str(len(self.calls)).encode())
         for name, value in {"config.json": {}, "deadline-result.json": {},
-                            "summary.json": {"episodes": [{"episode_index": 0}]}}.items():
+                            "summary.json": {"episodes": [{"episode_index": 0}],
+                                             "worker_stats": {"optimizer_updates": updates,
+                                                              "gradient_microbatches": updates}}}.items():
             (output / name).write_text(json.dumps(value))
         for name in ("game-trace.jsonl", "training.jsonl"):
             (output / name).write_text('{"fake_process_boundary":true}\n')
 
     def verify(self, directory, initial):
         if self.reject_verification:
+            raise AssertionError("Visible reward evidence differs")
+        stats = json.loads((directory / "summary.json").read_text())["worker_stats"]
+        if not stats["optimizer_updates"] or not stats["gradient_microbatches"]:
             raise AssertionError("No optimizer work happened")
         if not (directory / "checkpoint/generator.safetensors").read_bytes().startswith(
                 (initial / "generator.safetensors").read_bytes()):
@@ -159,12 +167,61 @@ class ColabRunTests(unittest.TestCase):
     def test_failed_verifier_stops_without_an_automatic_retry(self):
         self.fake.reject_verification = True
         run = self.run_object()
-        with self.assertRaisesRegex(AssertionError, "No optimizer work"):
+        with self.assertRaisesRegex(AssertionError, "Visible reward evidence differs"):
             run.train("fake-python", "fake-environments")
         self.assertEqual(len(self.fake.calls), 1)
         self.assertEqual(run.attempts[0].state, "failed")
         self.assertEqual(run.charged_seconds, 30)
         self.assertFalse((self.root / "store/blocks/0000/completion.json").exists())
+
+    def test_no_update_block_is_charged_and_next_block_uses_last_verified_weights(self):
+        self.fake.no_update_calls = {2}
+        run = self.run_object()
+        final = run.train("fake-python", "fake-environments")
+        previous = self.root / "store/blocks/0000/checkpoint"
+        starts = [Path(command[command.index("--checkpoint") + 1]) for command in self.fake.calls]
+        self.assertEqual(starts, [self.initial, previous, previous])
+        self.assertEqual([a.state for a in run.attempts], ["completed", "failed", "completed"])
+        self.assertEqual([a.seed for a in run.attempts], [42, 100042, 200042])
+        self.assertEqual(run.charged_seconds, 90)
+        self.assertEqual(final, self.root / "store/blocks/0002/checkpoint")
+        self.assertEqual((final / "generator.safetensors").read_bytes(), b"generator.safetensors13")
+        self.assertFalse((self.root / "store/blocks/0001").exists())
+        self.assertIn("No optimizer work happened", run.attempts[1].error)
+        self.assertEqual(json.loads((run.store / "latest.json").read_text())["checkpoint"], str(final))
+        resumed = self.run_object()
+        self.assertEqual(resumed.checkpoint, final)
+        self.assertEqual(resumed.charged_seconds, 90)
+
+    def test_all_no_update_blocks_exhaust_budget_without_publishing_trained_checkpoint(self):
+        self.fake.no_update_calls = {1, 2, 3}
+        run = self.run_object()
+        with self.assertRaisesRegex(RuntimeError, "Budget ended without a verified trained checkpoint"):
+            run.train("fake-python", "fake-environments")
+        self.assertEqual([a.state for a in run.attempts], ["failed"] * 3)
+        self.assertEqual(run.charged_seconds, 90)
+        self.assertEqual(run.checkpoint, self.initial)
+        self.assertEqual(len(self.fake.calls), 3)
+        self.assertFalse((run.store / "blocks").exists())
+        self.assertFalse((run.store / "latest.json").exists())
+        self.assertFalse(run.can_evaluate)
+        resumed = self.run_object()
+        self.assertEqual(resumed.checkpoint, self.initial)
+        with self.assertRaisesRegex(RuntimeError, "Budget ended without a verified trained checkpoint"):
+            resumed.train("fake-python", "fake-environments")
+        self.assertEqual(len(self.fake.calls), 3)
+
+    def test_runner_assertion_is_fatal_even_if_it_has_the_no_update_message(self):
+        run = self.run_object()
+
+        def fail_runner(*_, **__):
+            raise AssertionError("No optimizer work happened")
+
+        run.runner = fail_runner
+        with self.assertRaisesRegex(AssertionError, "No optimizer work happened"):
+            run.train("fake-python", "fake-environments")
+        self.assertEqual([a.state for a in run.attempts], ["failed"])
+        self.assertEqual(run.charged_seconds, 30)
 
     def test_frozen_evaluation_uses_exact_final_weights_and_reuses_verified_result(self):
         run = self.run_object()
