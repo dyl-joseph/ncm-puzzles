@@ -1,0 +1,83 @@
+{
+  "description": "Small NCM-style LS20 replay imitation pilot; not the published Sudoku model or an official benchmark submission.",
+  "upstream": "https://github.com/HazyResearch/ncm",
+  "upstream_revision": "c70274273f489abc73832b2b98584a8483b6b203",
+  "training_game": "ls20-9607627b",
+  "training_backend": "MLX GPU",
+  "maximum_training_seconds": 600,
+  "measured_training_wall_seconds": 555.2823265830011,
+  "duty_target": 0.8,
+  "duty_limit_is_soft": true,
+  "training_recordings": 9,
+  "validation_recordings": 2,
+  "test_recordings": 2,
+  "training_windows": 2048,
+  "primary_replay_test_inputs": 94,
+  "primary_replay_ncm_correct": 59,
+  "primary_replay_repeat_human_last_correct": 50,
+  "data_source": {
+    "repository": "magic-sword/arc_agi_3_public_demo_human_testing",
+    "revision": "455b7c58eaa9d5ea05f91cd1b5b603121599e758"
+  },
+  "weight_sha256": {
+    "tokenizer.safetensors": "0fa662e97fc511e6deb21196e16604873281c3c4a7d9c757bf5807286da8cc5c",
+    "generator.safetensors": "c1c150ce1a310c5139e6c260bd078d3d9a6e0c0cdda98fa0db64588e962f4d18"
+  },
+  "model_configuration": {
+    "implementation": "MLX GPU, trained from scratch",
+    "reference": "vendor/ncm/models/{vqvae,vae,quant,next_concept,common}.py",
+    "target_length": 12,
+    "levels": [
+      1,
+      3,
+      6,
+      12
+    ],
+    "latent_width": 64,
+    "codebook_sizes": [
+      64,
+      64,
+      64,
+      64
+    ],
+    "encoder_layers": 0,
+    "encoder_positional": true,
+    "compression_factor": 1,
+    "pre_quant_norm": null,
+    "decoder_layers": 1,
+    "decoder_heads": 4,
+    "decoder_positional": false,
+    "ema_decay": 0.99,
+    "ema_epsilon": 1e-05,
+    "commitment_cost": 0.25,
+    "learned_l1_sampling": false,
+    "learned_all_sampling": false,
+    "quant_resi": false,
+    "fine_level_dropout": 0.0,
+    "dropout": 0.0,
+    "generator_width": 64,
+    "generator_layers": 2,
+    "generator_heads": 4,
+    "context_embedding": "independent and trainable",
+    "position_encoding": "learned absolute, reset within every target level",
+    "use_rope": false,
+    "use_qk_norm": true,
+    "activation": "exact GELU",
+    "attention": "prefix bidirectional, target block diagonal, padded keys masked",
+    "query_level0": true,
+    "tie_output_heads": false,
+    "pretrained_weights": false,
+    "published_sudoku_deviations": [
+      "12 action tokens replace the 89-token Sudoku target",
+      "4 levels replace the published 12-level hierarchy",
+      "64-dimensional latents and 64-entry codebooks replace 256 and 16",
+      "64-wide two-block generator replaces 512-wide eight-block generator",
+      "area and linear resampling replace learned level-zero sampling",
+      "quantization residual convolutions, group normalization, and dropout disabled",
+      "learned absolute positions replace RoPE",
+      "independent trainable prefix embedding replaces tokenizer prefix embedding",
+      "no published checkpoint used and no numerical parity claim"
+    ]
+  },
+  "training_memory_peak_bytes": 1029196004
+}

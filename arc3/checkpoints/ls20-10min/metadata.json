@@ -1,0 +1,9 @@
+{
+  "vocab_size": 160,
+  "pad_id": 0,
+  "prefix_len": 1142,
+  "action_token_start": 24,
+  "coordinate_token_start": 32,
+  "no_coordinate_token": 1,
+  "game": "ls20"
+}

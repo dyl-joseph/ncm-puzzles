@@ -1,0 +1,26 @@
+[
+  {
+    "description": "An unfinished level scores zero even after actions",
+    "actions": [20, 7, 0],
+    "baselines": [10, 10, 10],
+    "completed": 1,
+    "level_scores": [25.0, 0.0, 0.0],
+    "score": 4.166666666666667
+  },
+  {
+    "description": "The completion cap limits two fast completed levels out of three",
+    "actions": [1, 1, 0],
+    "baselines": [2, 4, 6],
+    "completed": 2,
+    "level_scores": [115.0, 115.0, 0.0],
+    "score": 50.0
+  },
+  {
+    "description": "Matching the human action counts on all levels scores 100",
+    "actions": [2, 4, 6],
+    "baselines": [2, 4, 6],
+    "completed": 3,
+    "level_scores": [100.0, 100.0, 100.0],
+    "score": 100.0
+  }
+]
