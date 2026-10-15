@@ -1,0 +1,72 @@
+{
+  "device": "mlx",
+  "provenance": {
+    "checkpoint": {
+      "files": {
+        "config.yaml": {
+          "bytes": 1980,
+          "sha256": "8d58c49e6fe52e60191e06df4061937d5bb84f97c5ffbcd93ed9830c32f8df2f"
+        },
+        "generator.pt": {
+          "bytes": 102560203,
+          "sha256": "9e0bfe44abc1ca3930b7a63cd56cd0b9564b95e29edfe12dd0903207b89df8b8"
+        },
+        "tokenizer.pt": {
+          "bytes": 59816209,
+          "sha256": "3bc6aecad8e15820f9d9bb09750e3c59bdf91ca953f1f11dbd109aaed1d80c0b"
+        }
+      },
+      "repository": "hazyresearch/ncm-checkpoints",
+      "revision": "7100573f83178b6e9f45ebffe0e9aa6df384e712",
+      "task": "sudoku/hard"
+    },
+    "checkpoint_directory": "/Users/dylanjoseph/.t3/projects/ncm-chess/artifacts/sudoku/hard",
+    "packages": {
+      "hydra-core": "1.3.7",
+      "mlx": "0.32.4",
+      "numpy": "2.5.4",
+      "omegaconf": "2.3.1",
+      "torch": "2.14.1"
+    },
+    "provenance_sha256": "4cd26980903741a109c14ff67c42dbdac49de7a10eec989a48db9a61fdd492ca",
+    "upstream": {
+      "files_sha256": {
+        "models/common.py": "41b7c2c653d7ba312d583caca878ea3708d83da1a770b0b39651dbfd19754b73",
+        "models/next_concept.py": "4a1c483ca3b3522adb5ee754db4917c96ce08a82e992679ad7ed79e8f8c8da9b",
+        "models/quant.py": "5fd16053a826a5a0af580715a79bb03dc3eea49669514969c1086c445e9c9e2b",
+        "models/vae.py": "7d393b56813342278def3b053e83ec4ff4e56a492e4ddf2a2441e1c9f78d4317",
+        "models/vqvae.py": "9873af280da08ca39360388f652f993f17ace761a751ffa812caa706f66f592b",
+        "tokenization/sudoku_tokenizer.py": "a76c58f60d759ad3da045d3045a47588d1de16ca12c88472fa7f8262a236975f",
+        "tokenization/vqvae_tokenizer.py": "8fd909578fd384da49ebf44d1589f414c43860a6a84cb85e2c6659a6b0ff37ee",
+        "utils/misc.py": "7e766c7ee036648f4959323ab671e6a7c5d3e873adb9ed60fbec83497728b452",
+        "utils/registry.py": "28ecdf5be072c55e18348e519b5bd079c58dee085561abfb3f4587e5eac7938a"
+      },
+      "repository": "https://github.com/HazyResearch/ncm",
+      "revision": "c70274273f489abc73832b2b98584a8483b6b203"
+    }
+  },
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "ready": true,
+  "session": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge",
+  "source_sha256": {
+    "configs/latin9-10min.yaml": "2b88038a7c89bc02f33171810eb73cac89023fdd29326e11615c43325f1d49a2",
+    "configs/latin9-pilot.yaml": "e8ea9daf0bf20abe6661d0ab3dfb9ea114a0421f9f4e4bdf06643ffcd7a6227f",
+    "configs/latin9.yaml": "dd4214804edb6b371955496a579b47d1ad380c1c52622a1f7dd518b1fc85011e",
+    "continue_latin.py": "b264538800d8a1b80fb330fa296902e31c157b472c75325be41415d982007869",
+    "evaluate_latin.py": "b6bdbabf3d060e68630f6e39784094ec9ac96bfa83e6b4dd3e8f10fa3cdb43bb",
+    "latin_data.py": "04a683e37a6c28fe2ae80110d03e73e0729c3eff7784e714e27b92283dd851af",
+    "ncm_area_pool.py": "2f0b6c04414a0d34297609dcd6690015a4d285abd406c05d27749ac24cd0d1f6",
+    "ncm_attention.py": "269b06bff2ddd37593d1a5afaaffa14fe6affdf19204013c0810eda00633d2b0",
+    "ncm_checkpoint.py": "34973f1519977dc5d74f4194c5a623d49474da4ec06d59a256c8a0f0a70bc68e",
+    "ncm_fast_targets.py": "c14744089b26241cdbd4caf3c2f01d3c14915279c51306e247a2b5b82cb58106",
+    "ncm_mlx.py": "fd0a219bc8529756950659ca8cb515a3429b12e122a04ce6b7d46827b31d6d9f",
+    "ncm_resource.py": "dae820a9a92783c97b9bc5b7c7907fc03f9423ff16aa27fb9c27c7a62b2c3839",
+    "ncm_torch_ops.py": "bed693cc49e8070f10bf7814e946f25a034dd641534a8a3e5f29c32f74a446be",
+    "prepare_latin.py": "fbd82b20f0ee475436ed2933ca9a267f4695de12082f06a803d3b84643148038",
+    "requirements.txt": "1d18e3552bf7da0501e4986eef853edab8b33c853375dbc7db1cb4c360b5b442",
+    "resource_runner.py": "65521baf43d2d283d83b30318b4e66f3d206867be30096c1982f15340183f056",
+    "run_latin_10min.py": "150858975969bb0eaa4af93dc0706fc88b64576f5fc0e292b72b398be32f1bf2",
+    "scripts/verify_mlx.py": "422ddb88d4744da308dbc04dcf8fa7b04b54c7165bb1795a4f1aca60d1e9ec40",
+    "train_latin.py": "667624987731f4627bdceb28c7180b1236f60e7871a7973bd08ceee7760e995b"
+  }
+}

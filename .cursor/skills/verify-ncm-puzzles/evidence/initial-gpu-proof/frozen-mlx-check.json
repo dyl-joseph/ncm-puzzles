@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "/Users/dylanjoseph/.t3/projects/ncm-chess/.cursor/skills/verify-ncm-puzzles/scripts/check_evaluation.py",
+    "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/evidence/artifacts/frozen-mlx",
+    "--expected-count",
+    "4"
+  ],
+  "backend": "mlx-metal",
+  "cases_sha256": "775ada63f8827c88f736f3e4ef210725d4f5afaa8708615393c9b64ba92ce858",
+  "count": 4,
+  "device": "mlx",
+  "directory": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/evidence/artifacts/frozen-mlx",
+  "metrics": {
+    "given_cell_agreement": 0.9709302325581395,
+    "given_cells_correct": 167,
+    "given_cells_total": 172,
+    "scored": 4,
+    "solve_rate": 0.0,
+    "solved": 0,
+    "validity_rates": {
+      "clues_preserved": 0.5,
+      "columns_valid": 0.0,
+      "digits_valid": 1.0,
+      "rows_valid": 0.0,
+      "shape_valid": 1.0,
+      "sudoku_boxes_valid": 0.0
+    }
+  },
+  "verified": true
+}

@@ -1,0 +1,23 @@
+{
+  "argv": [
+    "/Users/dylanjoseph/.t3/projects/ncm-chess/.venv/bin/python",
+    "-B",
+    "-u",
+    "/Users/dylanjoseph/.t3/projects/ncm-chess/evaluate_latin.py",
+    "--count",
+    "4",
+    "--seed",
+    "42",
+    "--batch-size",
+    "2",
+    "--device",
+    "mlx",
+    "--output",
+    "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/evidence/artifacts/frozen-mlx",
+    "--cache-dir",
+    "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/work/source-cache"
+  ],
+  "cwd": "/Users/dylanjoseph/.t3/projects/ncm-chess",
+  "feature_action": "evaluation-frozen-mlx",
+  "started_at": "2026-10-15T05:31:16.076043+00:00"
+}

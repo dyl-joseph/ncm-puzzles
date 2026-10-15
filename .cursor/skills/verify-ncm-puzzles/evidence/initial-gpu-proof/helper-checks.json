@@ -1,0 +1,8 @@
+{
+  "abbreviated_output_escape_rejected": true,
+  "corrupted_summary_rejected": true,
+  "gpu_check_rejects_cpu_results": true,
+  "missing_cache_rejected": true,
+  "output_path_escape_rejected": true,
+  "shared_training_path_rejected": true
+}

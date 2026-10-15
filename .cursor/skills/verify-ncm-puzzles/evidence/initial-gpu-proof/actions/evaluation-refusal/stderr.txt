@@ -1,0 +1,9 @@
+usage: evaluate_latin.py [-h] [--count COUNT] [--seed SEED]
+                         [--batch-size BATCH_SIZE]
+                         [--device {mlx,cpu,mps,cuda}] [--output OUTPUT]
+                         [--cache-dir CACHE_DIR]
+                         [--checkpoint-dir CHECKPOINT_DIR]
+                         [--local-checkpoint LOCAL_CHECKPOINT] [--data DATA]
+                         [--split {validation,test,benchmark}]
+                         [--clue-count CLUE_COUNT]
+evaluate_latin.py: error: Output directory already exists: /Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/evidence/artifacts/frozen-mlx. Choose a new --output directory.
