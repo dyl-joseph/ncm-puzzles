@@ -24,7 +24,8 @@ def notebook(revision):
 
         Choose **Runtime > Change runtime type > GPU**, then **Runtime > Run all**.
         A T4, L4 or A100 with a compatible NVIDIA driver is required. Setup stops if this runtime
-        cannot run MLX CUDA. Python 3.12 or later is required.
+        cannot run MLX CUDA. Setup installs its own isolated Python 3.12 using a verified uv
+        binary. It does not require the notebook kernel's pip, venv or ensurepip.
 
         The default is **4 cumulative hours reserved for training processes**, about 25 times the
         earlier 9m35s pilot. Setup, the synthetic GPU check, compression, Drive copies and final
@@ -64,8 +65,6 @@ def notebook(revision):
         from pathlib import Path
 
         os.environ["MLX_ENABLE_TF32"] = "0"
-        if sys.version_info < (3, 12):
-            raise RuntimeError("Select a Colab runtime with Python 3.12 or later. The pinned SDK requires it.")
         if not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", RUN_NAME):
             raise ValueError("RUN_NAME must contain 1 to 80 letters, numbers, hyphens or underscores.")
         if not 1 / 120 <= TRAIN_HOURS <= 24 or not 30 <= BLOCK_SECONDS <= 600:
@@ -123,15 +122,12 @@ def notebook(revision):
         changes = subprocess.check_output(["git", "-C", str(REPO), "status", "--porcelain", "--untracked-files=no"], text=True)
         if changes.strip():
             raise RuntimeError("The source checkout has local edits. Preserve them and use a clean checkout.")
-        if not VENV.exists():
-            subprocess.run([sys.executable, "-m", "venv", str(VENV)], check=True)
-        PYTHON = VENV / "bin/python"
-        subprocess.run([str(PYTHON), "-m", "pip", "install", "-r", str(REPO / "arc3/requirements-sdk.txt"),
-                        "mlx[cuda12]==0.32.4"], check=True)
         os.chdir(REPO)
         if str(REPO) not in sys.path:
             sys.path.insert(0, str(REPO))
+        from arc3.colab_bootstrap import bootstrap_environment
         from arc3.colab_training import run_process
+        UV, PYTHON = bootstrap_environment(REPO, VENV, Path("/content/arc3-bootstrap-tools"))
         print(f"Pinned source {{actual}}. Isolated neural interpreter {{PYTHON}}.")
     '''), cell("markdown", """
         ## Check the actual model on CUDA
