@@ -1,0 +1,187 @@
+{
+  "attempted": 4,
+  "backend": "mlx-metal",
+  "backend_sha256": "fd0a219bc8529756950659ca8cb515a3429b12e122a04ce6b7d46827b31d6d9f",
+  "batch_size": 2,
+  "cases_sha256": "775ada63f8827c88f736f3e4ef210725d4f5afaa8708615393c9b64ba92ce858",
+  "checkpoint": {
+    "files": {
+      "config.yaml": {
+        "bytes": 1980,
+        "sha256": "8d58c49e6fe52e60191e06df4061937d5bb84f97c5ffbcd93ed9830c32f8df2f"
+      },
+      "generator.pt": {
+        "bytes": 102560203,
+        "sha256": "9e0bfe44abc1ca3930b7a63cd56cd0b9564b95e29edfe12dd0903207b89df8b8"
+      },
+      "tokenizer.pt": {
+        "bytes": 59816209,
+        "sha256": "3bc6aecad8e15820f9d9bb09750e3c59bdf91ca953f1f11dbd109aaed1d80c0b"
+      }
+    },
+    "repository": "hazyresearch/ncm-checkpoints",
+    "revision": "7100573f83178b6e9f45ebffe0e9aa6df384e712",
+    "task": "sudoku/hard"
+  },
+  "checkpoint_directory": "/Users/dylanjoseph/.t3/projects/ncm-chess/artifacts/sudoku/hard",
+  "clue_bin_counts": {
+    "25": 1,
+    "37": 1,
+    "49": 1,
+    "61": 1
+  },
+  "clue_counts": [
+    25,
+    37,
+    49,
+    61
+  ],
+  "completed": 4,
+  "device": "mlx",
+  "device_info": {
+    "architecture": "applegpu_g17s",
+    "device_name": "Apple M5 Pro",
+    "max_buffer_length": 30150672384,
+    "max_recommended_working_set_size": 40200896512,
+    "memory_size": 51539607552,
+    "resource_limit": 499000
+  },
+  "dtype": "float32",
+  "finished_at": "2026-10-15T05:31:19.562013+00:00",
+  "frozen": true,
+  "generation": {
+    "cfg_scale": 0.0,
+    "temperature": 0.0,
+    "top_k": 0,
+    "top_p": 1.0
+  },
+  "inference_seconds": 0.1118797090020962,
+  "metrics": {
+    "given_cell_agreement": 0.9709302325581395,
+    "given_cells_correct": 167,
+    "given_cells_total": 172,
+    "scored": 4,
+    "solve_rate": 0.0,
+    "solved": 0,
+    "validity_rates": {
+      "clues_preserved": 0.5,
+      "columns_valid": 0.0,
+      "digits_valid": 1.0,
+      "rows_valid": 0.0,
+      "shape_valid": 1.0,
+      "sudoku_boxes_valid": 0.0
+    }
+  },
+  "mlx_enable_tf32": "0",
+  "output_directory": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/evidence/artifacts/frozen-mlx",
+  "output_repair": false,
+  "packages": {
+    "hydra-core": "1.3.7",
+    "mlx": "0.32.4",
+    "numpy": "2.5.4",
+    "omegaconf": "2.3.1",
+    "torch": "2.14.1"
+  },
+  "per_clue_count": {
+    "25": {
+      "given_cell_agreement": 1.0,
+      "given_cells_correct": 25,
+      "given_cells_total": 25,
+      "scored": 1,
+      "solve_rate": 0.0,
+      "solved": 0,
+      "validity_rates": {
+        "clues_preserved": 1.0,
+        "columns_valid": 0.0,
+        "digits_valid": 1.0,
+        "rows_valid": 0.0,
+        "shape_valid": 1.0,
+        "sudoku_boxes_valid": 0.0
+      }
+    },
+    "37": {
+      "given_cell_agreement": 1.0,
+      "given_cells_correct": 37,
+      "given_cells_total": 37,
+      "scored": 1,
+      "solve_rate": 0.0,
+      "solved": 0,
+      "validity_rates": {
+        "clues_preserved": 1.0,
+        "columns_valid": 0.0,
+        "digits_valid": 1.0,
+        "rows_valid": 0.0,
+        "shape_valid": 1.0,
+        "sudoku_boxes_valid": 0.0
+      }
+    },
+    "49": {
+      "given_cell_agreement": 0.9183673469387755,
+      "given_cells_correct": 45,
+      "given_cells_total": 49,
+      "scored": 1,
+      "solve_rate": 0.0,
+      "solved": 0,
+      "validity_rates": {
+        "clues_preserved": 0.0,
+        "columns_valid": 0.0,
+        "digits_valid": 1.0,
+        "rows_valid": 0.0,
+        "shape_valid": 1.0,
+        "sudoku_boxes_valid": 0.0
+      }
+    },
+    "61": {
+      "given_cell_agreement": 0.9836065573770492,
+      "given_cells_correct": 60,
+      "given_cells_total": 61,
+      "scored": 1,
+      "solve_rate": 0.0,
+      "solved": 0,
+      "validity_rates": {
+        "clues_preserved": 0.0,
+        "columns_valid": 0.0,
+        "digits_valid": 1.0,
+        "rows_valid": 0.0,
+        "shape_valid": 1.0,
+        "sudoku_boxes_valid": 0.0
+      }
+    }
+  },
+  "platform": "macOS-27.0.1-arm64-arm-64bit",
+  "provenance_sha256": "4cd26980903741a109c14ff67c42dbdac49de7a10eec989a48db9a61fdd492ca",
+  "python": "3.12.14",
+  "rates_denominator": "completed predictions; inspect status and attempted for partial runs",
+  "requested": 4,
+  "rules_sent_to_model": false,
+  "runner_sha256": "b6bdbabf3d060e68630f6e39784094ec9ac96bfa83e6b4dd3e8f10fa3cdb43bb",
+  "seed": 42,
+  "source": {
+    "bytes": 372736,
+    "compression": "decompressed bounded prefix; full archive hash unavailable",
+    "fetched_at": "2026-10-15T05:31:18.932075+00:00",
+    "line_count": 4096,
+    "sampling_bias": "Seeded sampling from the first 4096 entries of McKay's order-9 isotopy representatives with nontrivial symmetries, not a uniform sample of all Latin squares.",
+    "sha256": "7679307d7f9fb37a3d02f425dfb39a275ecb137f31c3e3902d2fb3de35ac7a30",
+    "url": "https://users.cecs.anu.edu.au/~bdm/data/latin_is9nt.1.txt.gz"
+  },
+  "started_at": "2026-10-15T05:31:16.112379+00:00",
+  "startup_seconds": 3.33670133400301,
+  "status": "complete",
+  "upstream": {
+    "files_sha256": {
+      "models/common.py": "41b7c2c653d7ba312d583caca878ea3708d83da1a770b0b39651dbfd19754b73",
+      "models/next_concept.py": "4a1c483ca3b3522adb5ee754db4917c96ce08a82e992679ad7ed79e8f8c8da9b",
+      "models/quant.py": "5fd16053a826a5a0af580715a79bb03dc3eea49669514969c1086c445e9c9e2b",
+      "models/vae.py": "7d393b56813342278def3b053e83ec4ff4e56a492e4ddf2a2441e1c9f78d4317",
+      "models/vqvae.py": "9873af280da08ca39360388f652f993f17ace761a751ffa812caa706f66f592b",
+      "tokenization/sudoku_tokenizer.py": "a76c58f60d759ad3da045d3045a47588d1de16ca12c88472fa7f8262a236975f",
+      "tokenization/vqvae_tokenizer.py": "8fd909578fd384da49ebf44d1589f414c43860a6a84cb85e2c6659a6b0ff37ee",
+      "utils/misc.py": "7e766c7ee036648f4959323ab671e6a7c5d3e873adb9ed60fbec83497728b452",
+      "utils/registry.py": "28ecdf5be072c55e18348e519b5bd079c58dee085561abfb3f4587e5eac7938a"
+    },
+    "repository": "https://github.com/HazyResearch/ncm",
+    "revision": "c70274273f489abc73832b2b98584a8483b6b203"
+  },
+  "wall_seconds": 3.44963383400318
+}

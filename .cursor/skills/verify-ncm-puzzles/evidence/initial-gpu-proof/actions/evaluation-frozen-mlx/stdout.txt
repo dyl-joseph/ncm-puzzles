@@ -1,0 +1,5 @@
+Fetching the first 4096 public source lines.
+Evaluating 4 frozen-checkpoint Latin puzzles. Results in /Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/evidence/artifacts/frozen-mlx
+Completed 2/4. Solved 0. Estimated remaining 0.1s from completed batches.
+Completed 4/4. Solved 0. Estimated remaining 0.0s from completed batches.
+Status complete. Summary /Users/dylanjoseph/.t3/projects/ncm-chess/runs/verification/ncm-puzzles-20261015T052940Z-8v1j5kge/evidence/artifacts/frozen-mlx/summary.json

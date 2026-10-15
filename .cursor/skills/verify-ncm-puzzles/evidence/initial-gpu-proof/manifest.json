@@ -1,0 +1,81 @@
+{
+  "files": {
+    "actions/evaluation-frozen-mlx/command.json": {
+      "bytes": 720,
+      "sha256": "73931bc81e0b207d933a80a6dfd993582fa9aaefded28dc6a8f8a33175cff1b3"
+    },
+    "actions/evaluation-frozen-mlx/result.json": {
+      "bytes": 129,
+      "sha256": "7733852d03d282ffea0b436b84cddbbf7e187a3e4e545b0997a1f8b3ed901ed0"
+    },
+    "actions/evaluation-frozen-mlx/stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "actions/evaluation-frozen-mlx/stdout.txt": {
+      "bytes": 549,
+      "sha256": "702899376c49f3fff640825adee57331187ac7c054a8c1111378a07bff2ec5d7"
+    },
+    "actions/evaluation-frozen-mlx/transcript.jsonl": {
+      "bytes": 916,
+      "sha256": "c661c7a452b04c465f20802bfb12e0f1471056990821fc7efe18367dc6f6dc36"
+    },
+    "actions/evaluation-refusal/command.json": {
+      "bytes": 664,
+      "sha256": "e836be5b831feebbb58baa879b2717ae227368d758530dd7dc77aa4ce8bfba45"
+    },
+    "actions/evaluation-refusal/result.json": {
+      "bytes": 130,
+      "sha256": "a23510ebf58d756e3e97fde89f5304f96defd4bb4a82d6dddb099680ec2e2f13"
+    },
+    "actions/evaluation-refusal/stderr.txt": {
+      "bytes": 704,
+      "sha256": "149670d9db787fa91354fbe63fc1e5c6a3ed29eb4f644c66261d2b1b8b7ae6d3"
+    },
+    "actions/evaluation-refusal/stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "actions/evaluation-refusal/transcript.jsonl": {
+      "bytes": 786,
+      "sha256": "719929bc42079c37871f326ee59650f0a9de719d4754b659f0562c53c1e00caa"
+    },
+    "artifacts/frozen-mlx/cases.jsonl": {
+      "bytes": 2334,
+      "sha256": "775ada63f8827c88f736f3e4ef210725d4f5afaa8708615393c9b64ba92ce858"
+    },
+    "artifacts/frozen-mlx/predictions.jsonl": {
+      "bytes": 2752,
+      "sha256": "e0e024447df69c59d101aa501265d713d32b3791cba0a1777db450619fd91a88"
+    },
+    "artifacts/frozen-mlx/summary.json": {
+      "bytes": 6101,
+      "sha256": "c6aeb703daaf07dc96e129630a284f8c06d70005a4ef2c4e7101cfe0b44cc9ed"
+    },
+    "doctor-after.json": {
+      "bytes": 4102,
+      "sha256": "5a1e2fabca144aeb6a0ef250735ceb90572edff4f3c3ba8708bffa73a82c1983"
+    },
+    "doctor.json": {
+      "bytes": 4102,
+      "sha256": "5a1e2fabca144aeb6a0ef250735ceb90572edff4f3c3ba8708bffa73a82c1983"
+    },
+    "frozen-mlx-check.json": {
+      "bytes": 994,
+      "sha256": "3022c9c1f1016d8e11b682bcea4c10cc790176f99aeea3c07b4756989f196e56"
+    },
+    "helper-checks.json": {
+      "bytes": 242,
+      "sha256": "ec0756cd2e8111c11ceecececaeed6352a9c030fa58f94bb74880e1b1877aa25"
+    },
+    "refusal-after.txt": {
+      "bytes": 207,
+      "sha256": "0dd7432925e4c5c0b4047c7fd8102e8f2a0c02f0f59d59b3834a349de299e98c"
+    },
+    "refusal-before.txt": {
+      "bytes": 207,
+      "sha256": "0dd7432925e4c5c0b4047c7fd8102e8f2a0c02f0f59d59b3834a349de299e98c"
+    }
+  },
+  "scratch_removed": true
+}
