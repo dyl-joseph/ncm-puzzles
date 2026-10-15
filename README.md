@@ -6,6 +6,8 @@ building out puzzle adapters w/ NCM by HazyResearch
 
 Evaluate the published frozen NCM Sudoku checkpoint on 100 order-9 Latin-square completion puzzles.
 
+The [training pipeline](docs/latin-training.md) also trains a new Latin model from scratch with the released NCM architecture.
+
 Run from this directory with the prepared environment and checkpoint:
 
 ```sh
@@ -102,7 +104,7 @@ The report records the maximum differences in the final reconstruction and decod
 
 ## Check the scorer and dataset builder
 
-The scorer tests need only the Python standard library:
+Run the scorer, corpus, MPS operator, and training tests in the prepared environment:
 
 ```sh
 .venv/bin/python -m unittest discover -s tests -v
@@ -110,5 +112,16 @@ The scorer tests need only the Python standard library:
 ```
 
 The tests cover valid non-Sudoku Latin completions, alternative solutions, changed clues, row and column errors, malformed raw tokens, deterministic masks, retained box conflicts, and cache rejection.
+
+## Train Latin models
+
+The [Latin training guide](docs/latin-training.md) describes the full corpus, the two-stage recipe, checkpoint resume, and short execution checks.
+
+```sh
+.venv/bin/python prepare_latin.py --output data/latin9
+.venv/bin/python train_latin.py all --data data/latin9 --run runs/latin9-scratch --device mps
+```
+
+Training uses the original PyTorch model classes in `vendor/ncm`. The release does not include a trainer. This project adds that loop around the released architecture and published Sudoku settings. New model outputs stay under the chosen run directory. The original Sudoku weights remain in `artifacts/sudoku/hard`.
 
 Created in [T3 Code](https://t3.codes).

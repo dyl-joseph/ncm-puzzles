@@ -1,0 +1,171 @@
+{
+  "all_12_heads_changed_on_resume": true,
+  "baseline_regression": {
+    "all_8900_raw_tokens_identical_to_previous_reference": true,
+    "cases_identical_to_previous_reference": true,
+    "count": 100,
+    "solved": 1
+  },
+  "data": {
+    "dataset_compressed_bytes": 84528806,
+    "dataset_prepared_bytes": 203600005,
+    "native_mlx_source_unchanged": true,
+    "original_sudoku_checkpoints_verified": true,
+    "total_bytes": 288128811,
+    "upstream_revision": "c70274273f489abc73832b2b98584a8483b6b203"
+  },
+  "data_code_sha256": "04a683e37a6c28fe2ae80110d03e73e0729c3eff7784e714e27b92283dd851af",
+  "environment": {
+    "checkpoint": {
+      "files": {
+        "config.yaml": {
+          "bytes": 1980,
+          "sha256": "8d58c49e6fe52e60191e06df4061937d5bb84f97c5ffbcd93ed9830c32f8df2f"
+        },
+        "generator.pt": {
+          "bytes": 102560203,
+          "sha256": "9e0bfe44abc1ca3930b7a63cd56cd0b9564b95e29edfe12dd0903207b89df8b8"
+        },
+        "tokenizer.pt": {
+          "bytes": 59816209,
+          "sha256": "3bc6aecad8e15820f9d9bb09750e3c59bdf91ca953f1f11dbd109aaed1d80c0b"
+        }
+      },
+      "repository": "hazyresearch/ncm-checkpoints",
+      "revision": "7100573f83178b6e9f45ebffe0e9aa6df384e712",
+      "task": "sudoku/hard"
+    },
+    "checkpoint_directory": "/Users/dylanjoseph/.t3/projects/ncm-chess/artifacts/sudoku/hard",
+    "packages": {
+      "hydra-core": "1.3.7",
+      "numpy": "2.5.4",
+      "omegaconf": "2.3.1",
+      "torch": "2.14.1"
+    },
+    "provenance_sha256": "4cd26980903741a109c14ff67c42dbdac49de7a10eec989a48db9a61fdd492ca",
+    "upstream": {
+      "files_sha256": {
+        "models/common.py": "41b7c2c653d7ba312d583caca878ea3708d83da1a770b0b39651dbfd19754b73",
+        "models/next_concept.py": "4a1c483ca3b3522adb5ee754db4917c96ce08a82e992679ad7ed79e8f8c8da9b",
+        "models/quant.py": "5fd16053a826a5a0af580715a79bb03dc3eea49669514969c1086c445e9c9e2b",
+        "models/vae.py": "7d393b56813342278def3b053e83ec4ff4e56a492e4ddf2a2441e1c9f78d4317",
+        "models/vqvae.py": "9873af280da08ca39360388f652f993f17ace761a751ffa812caa706f66f592b",
+        "tokenization/sudoku_tokenizer.py": "a76c58f60d759ad3da045d3045a47588d1de16ca12c88472fa7f8262a236975f",
+        "tokenization/vqvae_tokenizer.py": "8fd909578fd384da49ebf44d1589f414c43860a6a84cb85e2c6659a6b0ff37ee",
+        "utils/misc.py": "7e766c7ee036648f4959323ab671e6a7c5d3e873adb9ed60fbec83497728b452",
+        "utils/registry.py": "28ecdf5be072c55e18348e519b5bd079c58dee085561abfb3f4587e5eac7938a"
+      },
+      "repository": "https://github.com/HazyResearch/ncm",
+      "revision": "c70274273f489abc73832b2b98584a8483b6b203"
+    }
+  },
+  "evaluations": {
+    "latin9-baseline-regression-mlx": {
+      "cases_sha256": "a536b384c32956fd10a0318ae1cd8f26edbc8f77fb312ac598461876a5626142",
+      "checkpoint_provenance_sha256": "4cd26980903741a109c14ff67c42dbdac49de7a10eec989a48db9a61fdd492ca",
+      "completed": 100,
+      "solved": 1,
+      "status": "complete"
+    },
+    "latin9-trained-smoke-mlx": {
+      "cases_sha256": "a536b384c32956fd10a0318ae1cd8f26edbc8f77fb312ac598461876a5626142",
+      "checkpoint_provenance_sha256": "77e26742c3a6fdc4875c49ea8f58fd4294fe22d48d446a34c9883718c898eaa3",
+      "completed": 100,
+      "solved": 0,
+      "status": "complete"
+    },
+    "latin9-trained-smoke-test-mlx": {
+      "cases_sha256": "90408a113e7bb320b345327fd5623b6b818db544047a069dce6fc744451a15af",
+      "checkpoint_provenance_sha256": "77e26742c3a6fdc4875c49ea8f58fd4294fe22d48d446a34c9883718c898eaa3",
+      "completed": 100,
+      "solved": 0,
+      "status": "complete"
+    }
+  },
+  "limitations": [
+    "Five tokenizer and three generator updates only. No trained-model quality claim.",
+    "FP32 eager execution differs from published BF16 compiled execution.",
+    "Unpublished corruption and optimizer details use documented project choices.",
+    "Fresh independent reviews used the inherited available model, not a different model family."
+  ],
+  "machine": {
+    "chip": "Apple M5 Pro",
+    "memory_bytes": 51539607552,
+    "platform": "macOS-27.0.1-arm64-arm-64bit"
+  },
+  "mps_adapter_sha256": "bed693cc49e8070f10bf7814e946f25a034dd641534a8a3e5f29c32f74a446be",
+  "mps_validation": {
+    "generator": {
+      "count": 4,
+      "given_cell_agreement": 0.0,
+      "given_cells_correct": 0,
+      "given_cells_total": 120,
+      "model_and_tokenizer_unchanged": true,
+      "rng_and_modes_unchanged": true,
+      "scored": 4,
+      "solve_rate": 0.0,
+      "solved": 0,
+      "validity_rates": {
+        "clues_preserved": 0.0,
+        "columns_valid": 0.0,
+        "digits_valid": 0.0,
+        "rows_valid": 0.0,
+        "shape_valid": 0.0,
+        "sudoku_boxes_valid": 0.0
+      }
+    },
+    "tokenizer": {
+      "count": 4,
+      "full_hierarchy_reconstruction_ce": 2.5702946695049156,
+      "model_and_tokenizer_unchanged": true,
+      "rng_and_modes_unchanged": true,
+      "token_accuracy": 0.13202247191011235
+    }
+  },
+  "recorded_at": "2026-10-15T00:18:44.483219+00:00",
+  "review": {
+    "comment_review_findings": 0,
+    "fixed_findings": 2,
+    "fresh_fix_review_actionable_findings": 0,
+    "initial_actionable_findings": 2
+  },
+  "rough_eta": {
+    "full_schedule_days": 15.000845572723655,
+    "full_schedule_seconds": 1296073.0574833238,
+    "generator_seconds_per_update": 25.649113082999975,
+    "scope": "One short verification run with a resumed segment, FP32 eager MPS, global batch 1024, generator microbatch 32. The full schedule has not run. Startup is outside the trainer timer. The requested-stop checkpoint is inside it. Periodic validation and sustained thermal behavior are not established.",
+    "tokenizer_seconds_per_update": 1.3617403333325153
+  },
+  "tests": {
+    "command": ".venv/bin/python -m unittest discover -s tests -v",
+    "failed": 0,
+    "passed": 68
+  },
+  "trained_mlx_cpu_parity": {
+    "checkpoint_provenance_sha256": "77e26742c3a6fdc4875c49ea8f58fd4294fe22d48d446a34c9883718c898eaa3",
+    "code_ids_compared": 32200,
+    "code_mismatches": 0,
+    "count": 100,
+    "passed": true,
+    "raw_ids_compared": 8900,
+    "raw_mismatches": 0
+  },
+  "training": {
+    "all_model_parameters_finite": true,
+    "generator_completed_updates": 3,
+    "generator_global_batch": 1024,
+    "generator_microbatch": 32,
+    "level_zero_query_max_abs_change_from_initialization": 1.8030405044555664e-06,
+    "local_export_validated": true,
+    "nonfinite_attention_mask_matches_original": true,
+    "optimizer_steps_match": true,
+    "sampler_positions_match": true,
+    "tokenizer_completed_updates": 5,
+    "tokenizer_fine_drop_step": 5,
+    "tokenizer_frozen_hash": "37d38d00fa5b4d56c5d5e5ba9e40d1e796dfeeca1237995ed4826f39e13836c9",
+    "tokenizer_global_batch": 1024,
+    "trainer_sha256": "667624987731f4627bdceb28c7180b1236f60e7871a7973bd08ceee7760e995b",
+    "verified_at": "2026-10-15T00:16:13.448810+00:00"
+  },
+  "training_code_sha256": "667624987731f4627bdceb28c7180b1236f60e7871a7973bd08ceee7760e995b"
+}
