@@ -290,12 +290,14 @@ class TrainingRun:
             initial_checkpoint = self.checkpoint
             print(f"Block {attempt.index + 1}. Reserved {self.charged_seconds}/{self.spec.total_seconds}s. "
                   f"Seed {attempt.seed}. Warm start {initial_checkpoint}.", flush=True)
+            archiving = False
             try:
                 self.runner([python, "-m", "arc3.train_gameplay", "--output", output,
                              "--checkpoint", initial_checkpoint, "--mlx-python", python,
                              "--environments-dir", environments, "--max-seconds", attempt.reserved_seconds,
                              "--seed", attempt.seed], timeout=attempt.reserved_seconds + 20,
                             log=self.local / f"attempt-{attempt.index:04d}.log", status=output / "status.json")
+                archiving = True
                 report = self.archive(output, attempt, initial_checkpoint)
             except BaseException as error:
                 if attempt.state != "completed":
@@ -305,6 +307,10 @@ class TrainingRun:
                                      f"{type(error).__name__}: {error}")
                     self.save_ledger()
                     print(attempt.error, flush=True)
+                if (archiving and attempt.state == "failed" and isinstance(error, AssertionError) and
+                        error.args == ("No optimizer work happened",)):
+                    print("Continuing with the same checkpoint after a block without an optimizer update.", flush=True)
+                    continue
                 raise
             print(f"Verified checkpoint {attempt.index + 1}. Updates {report['optimizer_updates']}. "
                   f"Level rewards {report['counts'].get('level_completion_rewards', 0)}. "

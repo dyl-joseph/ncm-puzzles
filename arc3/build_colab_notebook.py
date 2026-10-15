@@ -31,7 +31,8 @@ def notebook(revision):
         earlier 9m35s pilot. Setup, the synthetic GPU check, compression, Drive copies and final
         evaluation take additional time. Colab availability and session duration are not guaranteed.
 
-        This continues the bundled LS20 gameplay checkpoint. It downloads all 25 official public
+        This uses the small NCM prototype with 204,608 trainable generator parameters and a frozen
+        tokenizer. It continues the bundled LS20 gameplay checkpoint and downloads all 25 official public
         game sources once and then runs headless offline games. Training uses **LS20 only** and
         native level-completion rewards plus invalid-action and game-over penalties. It does not
         download human action labels. MLX handles all neural work on the GPU. SDK simulation,
@@ -52,7 +53,7 @@ def notebook(revision):
         [Colab runtime limits](https://research.google.com/colaboratory/faq.html).
     """), cell("code", """
         TRAIN_HOURS = 4
-        RUN_NAME = "arc3-ls20-4h-v3"
+        RUN_NAME = "arc3-ls20-4h-v4"
         SAVE_TO_DRIVE = True
         BASE_SEED = 42
         BLOCK_SECONDS = 600
@@ -91,10 +92,11 @@ def notebook(revision):
         Drive mount when prompted. Rerun with the same RUN_NAME, hours, seed and source revision to
         resume. A failed or disconnected block consumes its entire reserved allowance and its
         partial weights are never selected. Rerunning after a block failure tries a fresh block
-        from the last verified checkpoint. A block with no verified optimizer update stops with
-        its error. Local-only storage disappears when Colab resets. Allow several GB for evidence.
+        from the last verified checkpoint. Blocks without optimizer updates stay failed and charged,
+        and the run continues from the last verified weights. Other errors stop the run.
+        Local-only storage disappears when Colab resets. Allow several GB for evidence.
 
-        This notebook starts a new v3 run from the bundled checkpoint. Your older runs stay
+        This notebook starts a new v4 run from the bundled checkpoint. Your older runs stay
         in their original folders. Open this notebook in a fresh Colab session so its Python imports
         use the pinned source below.
     """), cell("code", """
@@ -179,7 +181,8 @@ def notebook(revision):
         Progress appears after every block. Per-episode logs stay in the local work directory.
         Every clean block is independently verified, its complete trace is compressed and checked
         again, and its immutable completion manifest is written last in the run store. Interrupted
-        mutable checkpoints are discarded from selection. The notebook stops on a failed block.
+        mutable checkpoints are discarded from selection. Blocks without optimizer updates are
+        skipped and never published as trained checkpoints. Other block failures stop the notebook.
     """), cell("code", """
         run_process([PYTHON, "-m", "arc3.colab_training", *COMMON],
                     timeout=int(TRAIN_HOURS * 3600) + 6 * 3600)
