@@ -42,7 +42,7 @@ def notebook(revision):
         warm starts, not an exact optimizer resume. The unchanged model has fixed board-prefix
         capacity and strict command/click limits. More training may still produce zero solves.
 
-        The last cell tests the frozen checkpoint on the 25 public development games. Its score
+        The evaluation cell tests the frozen checkpoint on the 25 public development games. Its score
         is **not a Kaggle competition score**. There is no automatic Kaggle submission.
 
         Sources: [ARC Prize SDK](https://docs.arcprize.org/),

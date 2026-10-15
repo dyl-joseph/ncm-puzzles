@@ -59,6 +59,10 @@ Each run saves:
 
 ## Train on game feedback
 
+For a longer GPU run, upload [arc3_colab_training.ipynb](../notebooks/arc3_colab_training.ipynb) to Google Colab and choose a GPU runtime. Its default reserves four cumulative hours across verified 600-second blocks. It downloads the official public games, continues the bundled gameplay weights, saves complete compressed evidence to optional Google Drive, and evaluates the final frozen checkpoint on all 25 games. Each block resets Adam, RNG and the reward baseline, so resume means weight warm starts. Training remains LS20-only. A compatible MLX CUDA runtime is checked with the actual model before the long run. The notebook does not submit to Kaggle, and longer training may still score zero.
+
+The notebook schema and code cells passed local validation, and the full-model selfcheck passed on Metal. NVIDIA CUDA execution remains unverified here; the notebook requires its own CUDA selfcheck to pass in Colab.
+
 The completed pilot fine-tuned the generator on LS20 for 575.21 seconds using level completions and explicit failure penalties. It made 644 optimizer updates, but its subsequent frozen evaluation still completed zero levels. See the [training report](../docs/arc3-gameplay-training.md) for the objective, constraints and evidence.
 
 To reproduce one training run, then evaluate its saved checkpoint:

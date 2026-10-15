@@ -12,7 +12,7 @@ The [official starter documentation](https://docs.arcprize.org/arc-prize-2026) d
 
 Local testing uses Python 3.12, `arc-agi==0.9.9`, `arcengine==0.9.3`, and the exact downloaded public game revisions. `Arcade` loads them in `OFFLINE` mode. Calls to `arc.make` omit rendering arguments and assert that the resulting renderer is `None`, following the [official quickstart](https://docs.arcprize.org/) and [environment interface](https://docs.arcprize.org/toolkit/environment_wrapper).
 
-The current neural runtime requires MLX Metal GPU. Kaggle runs Linux with NVIDIA GPUs. MLX has a [CUDA backend](https://ml-explore.github.io/mlx/build/html/install.html), but the current Metal-only entry point is not a tested Kaggle submission. A CUDA entry point needs packaged offline dependencies and numerical checks on the target hardware.
+The neural runtime accepts MLX Metal or CUDA GPU and rejects CPU neural computation. The [Colab training notebook](../notebooks/arc3_colab_training.ipynb) installs the [MLX CUDA backend](https://ml-explore.github.io/mlx/build/html/install.html) and requires a full-model GPU update and checkpoint reload check before training. The selfcheck passed locally on Metal; NVIDIA execution remains unverified here. The notebook evaluates public games and does not implement the Kaggle competition gateway. A Kaggle entry still needs packaged offline dependencies and validation on the target hardware.
 
 ## What the bounded training run establishes
 
