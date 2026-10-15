@@ -1,0 +1,38 @@
+{
+  "status": "passed_for_available_evidence",
+  "archive_hashes": "passed",
+  "tensor_headers_and_finite_values": {
+    "generator.safetensors": {
+      "tensors": 44,
+      "stored_values": 204608,
+      "finite": "passed"
+    },
+    "tokenizer.safetensors": {
+      "tensors": 30,
+      "stored_values": 104352,
+      "finite": "passed"
+    }
+  },
+  "recorded_frame_reward_and_on_policy_loss_checks": "passed",
+  "trace_counts": {
+    "actual_game_actions": 27082,
+    "level_completion_rewards": 0,
+    "game_over_penalties": 0,
+    "sampled_decisions": 27083,
+    "episodes": 213,
+    "invalid_actions": 1
+  },
+  "optimizer_updates_verified": 72,
+  "termination_counts": {
+    "horizon": 211,
+    "invalid_action": 1,
+    "training_deadline": 1
+  },
+  "reward_driven_updates": 1,
+  "baseline_only_updates": 71,
+  "zero_gradient_episodes": 140,
+  "internal_checkpoint_save_calls": 11,
+  "previous_checkpoint_weight_bytes_verified": false,
+  "limitation": "Block 0022 weights and the run ledger are absent, so previous-weight bytes, parameter delta and the full run chain cannot be independently recomputed. The declared prior hashes match between the supplied manifest, stats and provenance.",
+  "scope": "Checkpoint and final-block recorded training evidence; game performance is checked separately."
+}

@@ -1,6 +1,6 @@
 # ARC-AGI-3 gameplay training and evaluation
 
-Run either committed LS20 checkpoint as an agent in all 25 public games. This evaluates actual game responses, completed levels and the official human-relative action-efficiency score. The [original gameplay report](../docs/arc3-gameplay.md) and [gameplay training report](../docs/arc3-gameplay-training.md) explain the results and comparison limits. Both checkpoints scored zero; neither has a Kaggle competition score.
+Run a committed LS20 checkpoint as an agent in all 25 public games. This evaluates actual game responses, completed levels and the official human-relative action-efficiency score. The [original gameplay report](../docs/arc3-gameplay.md), [gameplay training report](../docs/arc3-gameplay-training.md), and [final Colab checkpoint validation](../docs/arc3-colab-final-validation.md) explain the results and comparison limits. All three evaluated NCM checkpoints scored zero; none has a Kaggle competition score.
 
 During evaluation, the model is frozen. It predicts four commands, executes the first raw command, observes the real game response and replans. Invalid commands and boards that exceed its fixed prefix capacity terminate the episode and remain in the score denominator. Human action baselines set budgets and scores; the model never receives them.
 
@@ -47,7 +47,7 @@ Every run uses a new output directory. Defaults are seed 0, five times the human
 
 `random` samples a legal nonreset action uniformly and samples click coordinates uniformly. `repeat` starts with the smallest legal action, clicks the center when needed, and repeats its own previous command. This online repetition agent receives no human trajectory.
 
-For a short smoke check, add `--games ls20 --multiplier 0.05` and use a separate output directory. A subset run sets `subset_smoke` in its summary and cannot establish an all-game score. Use `--checkpoint PATH` for a relocated copy of either bundled checkpoint, with both `.safetensors` files, `metadata.json` and `provenance.json`. The gameplay-trained checkpoint also requires its hash-bound `inference_controls.json`. These four output controls check checkpoint reload consistency, not performance.
+For a short smoke check, add `--games ls20 --multiplier 0.05` and use a separate output directory. A subset run sets `subset_smoke` in its summary and cannot establish an all-game score. Use `--checkpoint PATH` for a relocated copy of a bundled checkpoint, with both `.safetensors` files, `metadata.json` and `provenance.json`. The gameplay-trained checkpoints also require their hash-bound `inference_controls.json`. These four output controls check checkpoint reload consistency, not performance.
 
 Each run saves:
 
@@ -64,6 +64,8 @@ For a longer GPU run, upload [arc3_colab_training.ipynb](../notebooks/arc3_colab
 The notebook schema and code cells passed local validation, and the full-model selfcheck passed on Metal. NVIDIA CUDA execution remains unverified here; the notebook requires its own CUDA selfcheck to pass in Colab.
 
 The completed pilot fine-tuned the generator on LS20 for 575.21 seconds using level completions and explicit failure penalties. It made 644 optimizer updates, but its subsequent frozen evaluation still completed zero levels. See the [training report](../docs/arc3-gameplay-training.md) for the objective, constraints and evidence.
+
+The user's final Colab block is also committed at [results/colab-final/block-0023/checkpoint](results/colab-final/block-0023/checkpoint). Its new local frozen evaluation completed 0/183 levels across all 25 public games. The [validation report](../docs/arc3-colab-final-validation.md) distinguishes the verified final-block evidence from the unavailable earlier checkpoint chain.
 
 To reproduce one training run, then evaluate its saved checkpoint:
 
@@ -100,6 +102,8 @@ python3 -m arc3.verify_score arc3/results/ncm arc3/results/random arc3/results/r
 python3 -m arc3.verify_training arc3/results/gameplay-training
 python3 -m arc3.verify_score arc3/results/gameplay-trained-eval \
   --checkpoint arc3/results/gameplay-training/checkpoint
+python3 -m arc3.verify_score arc3/results/colab-final/frozen-evaluation \
+  --checkpoint arc3/results/colab-final/block-0023/checkpoint
 ```
 
-The saved model is a small MLX adaptation of [HazyResearch NCM](https://github.com/HazyResearch/ncm) at revision `c70274273f489abc73832b2b98584a8483b6b203`. Its configuration and differences from the released Sudoku model are in the checkpoint provenance. The upstream MIT notice is in [LICENSES/ncm-MIT.txt](../LICENSES/ncm-MIT.txt).
+The saved model is a small MLX adaptation of [HazyResearch NCM](https://github.com/HazyResearch/ncm) at revision `c70274273f489abc73832b2b98584a8483b6b203`. Its configuration and differences from the released Sudoku model are declared in [mlx_ncm.py](mlx_ncm.py). The upstream MIT notice is in [LICENSES/ncm-MIT.txt](../LICENSES/ncm-MIT.txt).

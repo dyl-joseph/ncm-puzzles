@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "source_archive_sha256": "f78a2da8f1368857da79bb81fb9e4d9b9c858281bb8261a7d1512ebf334caa2c",
+  "files": {
+    "archive-origin.json": "c830771038e3c0b5bf1e06bbbad793f8f004c2760f6ed2a18e16551586537453",
+    "block-0023/checkpoint/generator.safetensors": "ce04b0f30dfddfb7d4a982e9dd43537f60ee5e5ab454d8876dbc414e543fe378",
+    "block-0023/checkpoint/inference_controls.json": "fe8d554a589fb10b982897dde0c80dd6d7ae98e535f074abd8f8f16b0475cf65",
+    "block-0023/checkpoint/metadata.json": "f733a228e3f4232d96ea5ee1eb3ac26835b9a52df0afada03b29ac62b3f3ec8c",
+    "block-0023/checkpoint/provenance.json": "94f2fdd9c10b3dde024bfa756e47bfae04ea2e31d06ac8782afb085e4c39eb29",
+    "block-0023/checkpoint/tokenizer.safetensors": "0fa662e97fc511e6deb21196e16604873281c3c4a7d9c757bf5807286da8cc5c",
+    "block-0023/completion.json": "495dac4b2fd21913b299a510c6b044210241007461cc8f9dd8a10dc80d90c9cc",
+    "block-0023/config.json": "ce38b05c1098f965073dd35f8ce000eb7bb7585a58cb99f3698d6081e44bbbdd",
+    "block-0023/deadline-result.json": "5269b4b988aa7ce11824ea3be6f690881251aff8009394c0014bcf34dc90720d",
+    "block-0023/game-trace.jsonl.xz": "57efe2da4780acf45ef794e2c3c0b8aab6870c33855aa36d52302d84c1abe5d7",
+    "block-0023/summary.json": "984a716cedbd249f77a07eb46487efcf4d1845c16c43fbc6ceb72d58bde857f5",
+    "block-0023/training.jsonl.xz": "7e86f969fa48df3de45fce54f5e341b62795afa8758d63b305591a7ca3a31edf",
+    "block-0023/verification.json": "a4a09ecf674c5eb902f2a54858f49b1845fcb775a51b1b7f3f1744b5bbacf79e",
+    "frozen-evaluation/adapter_checks.json": "7708f7c93fbe4b80549bd43283956381d105a2e8153e1673d199b10408b34235",
+    "frozen-evaluation/scorecard.json": "9a5b47476d2fa899b7b92cf60e59e0d9fac6cac65a72abdc86d006d6819e277c",
+    "frozen-evaluation/summary.json": "16eb00f4d889b921caf84a6b67103a52e28837c5ec66f45fffbb269a8d4f5962",
+    "frozen-evaluation/trace.jsonl.xz": "8739a31e39e7c9f8db312b22f78ecce424d5bacd9351ec13900d15f1d90bca03",
+    "frozen-evaluation/verification.json": "0765e3147ef5209e8b48ac7e3595745500c6bd3995c058e02b59faa73f439faf",
+    "training-evidence-verification.json": "45532daba0241370953acbe793b888d04958a6bdf367bea88ae108fca3454b8d",
+    "validation.json": "6c146f320b043886b6ad8bd8c53a2ca642645910d88062f750a6ce1a0fbad6da"
+  }
+}
