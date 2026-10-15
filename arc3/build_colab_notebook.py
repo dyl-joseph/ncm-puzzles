@@ -52,7 +52,7 @@ def notebook(revision):
         [Colab runtime limits](https://research.google.com/colaboratory/faq.html).
     """), cell("code", """
         TRAIN_HOURS = 4
-        RUN_NAME = "arc3-ls20-4h-v1"
+        RUN_NAME = "arc3-ls20-4h-v2"
         SAVE_TO_DRIVE = True
         BASE_SEED = 42
         BLOCK_SECONDS = 600
@@ -93,6 +93,10 @@ def notebook(revision):
         partial weights are never selected. Rerunning after a block failure tries a fresh block
         from the last verified checkpoint. A block with no verified optimizer update stops with
         its error. Local-only storage disappears when Colab resets. Allow several GB for evidence.
+
+        This notebook starts a new v2 run from the bundled checkpoint. Your older v1 run stays
+        in its original folder. Open this notebook in a fresh Colab session so its Python imports
+        use the pinned source below.
     """), cell("code", """
         if SAVE_TO_DRIVE:
             from google.colab import drive
