@@ -1,0 +1,39 @@
+{
+  "recipe": {
+    "generator_updates_max": 400,
+    "generator_global_and_microbatch_size": 32,
+    "warmup_updates": 20,
+    "tokenizer_reused_updates": 213
+  },
+  "checks": {
+    "unit_tests_passed": 7,
+    "mps_bounded_updates_passed": 3,
+    "mps_resumed_deadline_check": {
+      "completed_updates": 33,
+      "elapsed_seconds": 28.031463249997614,
+      "export": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin9-10min-verified/generator/export",
+      "ready": true,
+      "returncode": 0,
+      "source_tokenizer_sha256": "e7a37a8e46549632314d9031b6bef102521224f94da6b0263936d0391c071b47",
+      "stop_reason": "deadline"
+    },
+    "mlx_export_smoke_completed": 100,
+    "original_trainer_unchanged": true,
+    "original_tokenizer_unchanged": true,
+    "original_run_remains_at_213_tokenizer_updates": true,
+    "default_training_not_started": true
+  },
+  "sudoku_baseline": {
+    "completed": 2000,
+    "solved": 9,
+    "solve_rate": 0.0045,
+    "cases_sha256": "486c9c55e6d67f19d1a34841eb8d20f4f0efba630df63788b6d4a23f21b4aff7",
+    "summary": "runs/compare-sudoku-test2000/summary.json"
+  },
+  "scope": "Execution, saving, deadline and inference checks. These bounded model updates do not establish trained solver quality.",
+  "principles": {
+    "Model the Domain": "The wrapper owns the deadline and run setup; the original trainer owns model state and exports.",
+    "Prove It Works": "Real MPS updates, a 30-second real trainer deadline, saved export verification and 100 MLX predictions passed.",
+    "Explain the Number": "The 6-8 minute estimate is extrapolated from bounded runs; Sudoku solve count was independently rescored on exactly 2000 masked boards."
+  }
+}

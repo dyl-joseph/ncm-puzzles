@@ -1,0 +1,44 @@
+{
+  "source": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin9-fast-exact",
+  "preflight_run": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin9-3600-preflight-20261015",
+  "start_update": 1600,
+  "target_updates": 3600,
+  "requested_additional_updates": 2000,
+  "byte_equal_initial_state_fields": {
+    "format": true,
+    "completed_updates": true,
+    "model": true,
+    "optimizer": true,
+    "sampler": true,
+    "rng": true,
+    "fine_drop_step": true
+  },
+  "smoke_completed_updates": 1602,
+  "adamw_steps": 1602,
+  "resume_with_and_without_explicit_budget_verified": true,
+  "source_unchanged": true,
+  "source_sha256": {
+    "run.json": "0fcfb63d1c1be9ddbaf0fca37ab647a13174b900c6a4fc2710963fcc45717746",
+    "generator/state.pt": "df31471d3ff3b86cdf8592ad4c4526bea05e016ce3e8626ffbf35e35224bee93",
+    "generator/tokenizer-snapshot.pt": "e7a37a8e46549632314d9031b6bef102521224f94da6b0263936d0391c071b47",
+    "generator/tokenizer-snapshot.json": "23e88e6c0a18ab2aad3c994b877782fe698c9db52c74276ed6902eff1b7f78a9",
+    "generator/export/generator.pt": "e9f17d9ae7d45cad54bcba17e3f171efe6e2d239b88f3a77a630d23c76baecf3",
+    "generator/export/tokenizer.pt": "e7a37a8e46549632314d9031b6bef102521224f94da6b0263936d0391c071b47",
+    "generator/export/provenance.json": "836852b4b2926987233aa78e3acec7c77cdd2406b8d6b0601c878d20595340e0"
+  },
+  "helper_sha256": "79507f110cf5562bb546f61d12e481893ea392554e47da8b3442e69a62a51012",
+  "tokenizer_full_board_reconstructions": {
+    "digit_cells_correct": 162000,
+    "digit_cells_total": 162000,
+    "digit_cell_accuracy": 1.0,
+    "all_token_accuracy": 1.0,
+    "exact_boards": 2000,
+    "board_count": 2000,
+    "exact_board_rate": 1.0,
+    "reconstruction_ce": 0.008079814969823601
+  },
+  "tokenizer_audit": "runs/tokenizer-audit-20261015T010656Z/report.json",
+  "mlx_smoke_evaluation": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin9-3600-preflight-20261015/evaluation-validation-20261015T125221.983044Z",
+  "related_tests_passed": 53,
+  "scope": "Only two verification updates ran in a separate destination. The 2,000-update experiment was not launched."
+}

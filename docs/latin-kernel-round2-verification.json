@@ -1,0 +1,212 @@
+{
+  "status": "verified_exact_gradients_target_not_met",
+  "target": "At least ten percent shorter equal-work training, with byte-identical gradients against the existing BF16-math runtime.",
+  "target_met": false,
+  "focused_tests_passed": 89,
+  "execution": {
+    "format": "ncm-resource-execution-v1",
+    "policy": {
+      "gpu_duty_cycle": 0.8,
+      "memory_limit_bytes": 8589934592,
+      "rss_limit_bytes": 8589934592,
+      "min_available_bytes": 6442450944,
+      "gpu_sample_interval_seconds": 1.0
+    },
+    "fast_frozen_targets": true,
+    "generator_precision": "bf16",
+    "attention_kernel": "bf16-math",
+    "frozen_pooling": "metal",
+    "runtime_sha256": {
+      "resource_runner.py": "af73a8d47cd897c67de814b8cd918eb923634cbcaeb886aca202073027f151d2",
+      "ncm_resource.py": "db8b9aa7df5a7f666ee8ddf8efa258b3249bf7394baa13db523bd728c94fcc6d",
+      "ncm_fast_targets.py": "c14744089b26241cdbd4caf3c2f01d3c14915279c51306e247a2b5b82cb58106",
+      "ncm_attention.py": "269b06bff2ddd37593d1a5afaaffa14fe6affdf19204013c0810eda00633d2b0",
+      "ncm_area_pool.py": "2f0b6c04414a0d34297609dcd6690015a4d285abd406c05d27749ac24cd0d1f6"
+    }
+  },
+  "comparison": {
+    "artifact": "runs/latin-kernel-round2-training-ab-20261015/report.json",
+    "summary": {
+      "reference": {
+        "count": 5,
+        "median_training_seconds": 18.529693249998672,
+        "minimum_training_seconds": 18.248714250003104,
+        "maximum_training_seconds": 18.64427358299872,
+        "median_whole_process_seconds": 19.041321417003928,
+        "median_seconds_per_update": 0.7951544124996872
+      },
+      "metal": {
+        "count": 5,
+        "median_training_seconds": 17.988084500000696,
+        "minimum_training_seconds": 17.85999974999868,
+        "maximum_training_seconds": 18.053349583002273,
+        "median_whole_process_seconds": 18.49997325000004,
+        "median_seconds_per_update": 0.7658986124999501
+      }
+    },
+    "training_time_reduction_fraction": 0.029229234542132332,
+    "whole_process_time_reduction_fraction": 0.028430178512740434,
+    "alternating_trials_per_side": 5,
+    "updates_per_trial": 20,
+    "puzzles_per_update": 32,
+    "physical_microbatch": 16,
+    "scope": "Actual CLI continuation, preparation, training, memory checks, 80 percent duty pauses, checkpoint/export and export verification. Evaluation excluded on both sides.",
+    "byte_identical_saved_training_state_in_all_five_pairs": true,
+    "comparison_excludes_only_immutable_provenance": true,
+    "source_checkpoint_unchanged": true
+  },
+  "exact_gradient_probe": {
+    "artifact": "runs/latin-kernel-round2-production-both-layouts-20261015/report.json",
+    "parity": {
+      "exact_codes": true,
+      "exact_context": true,
+      "context_max_error": 0.0,
+      "gradient_max_error": 0.0,
+      "parameter_max_error": 0.0,
+      "loss_error": 0.0,
+      "mps_rng_equal": true,
+      "raw_gradients_exact": true,
+      "clipped_gradients_exact": true,
+      "updated_parameters_exact": true
+    },
+    "dropout": "enabled during parity and timings",
+    "dtype": "FP32 raw and clipped gradients and weights, compared as uint8 byte arrays",
+    "profile_counts": {
+      "baseline": {
+        "aten::linear": {
+          "count": 188,
+          "self_cpu_us": 2435.776999999941
+        },
+        "aten::mm": {
+          "count": 208,
+          "self_cpu_us": 114404.83800000006
+        },
+        "aten::convolution": {
+          "count": 22,
+          "self_cpu_us": 19.083999999954813
+        },
+        "aten::mean": {
+          "count": 960,
+          "self_cpu_us": 1733.977000000406
+        },
+        "aten::scaled_dot_product_attention": {
+          "count": 32,
+          "self_cpu_us": 30.955999999772757
+        },
+        "aten::_scaled_dot_product_attention_math": {
+          "count": 16,
+          "self_cpu_us": 51.942000000150074
+        },
+        "aten::bmm": {
+          "count": 96,
+          "self_cpu_us": 12219.037000000022
+        }
+      },
+      "optimized": {
+        "aten::linear": {
+          "count": 188,
+          "self_cpu_us": 2456.271999999907
+        },
+        "aten::mm": {
+          "count": 208,
+          "self_cpu_us": 113180.62500000012
+        },
+        "aten::convolution": {
+          "count": 22,
+          "self_cpu_us": 20.87500000004684
+        },
+        "aten::mean": {
+          "count": 32,
+          "self_cpu_us": 118.3199999999506
+        },
+        "aten::scaled_dot_product_attention": {
+          "count": 32,
+          "self_cpu_us": 29.5540000000874
+        },
+        "aten::_scaled_dot_product_attention_math": {
+          "count": 16,
+          "self_cpu_us": 50.11300000008396
+        },
+        "aten::bmm": {
+          "count": 96,
+          "self_cpu_us": 12045.372999999729
+        }
+      }
+    },
+    "limiter": "Pooling removes 928 sliced means per global update. The unchanged generator and tokenizer still execute 208 mm, 96 bmm and 22 convolution calls. Generator matrix computation dominates the remaining update.",
+    "profile_scope": "CPU dispatch counts and attribution. Profiled trials are excluded from timing. CPU attribution is not GPU kernel time."
+  },
+  "frozen_target_parity": {
+    "artifact": "runs/latin-kernel-round2-target-parity-20261015/report.json",
+    "puzzles": 160,
+    "codes_and_contexts_byte_equal": true,
+    "mps_rng_unchanged": true
+  },
+  "resume": {
+    "artifact": "runs/latin-kernel-round2-resume-20261015/report.json",
+    "split_run": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin-kernel-round2-resume-split-20261015",
+    "whole_run": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin-kernel-round2-resume-whole-20261015",
+    "completed_updates": 1002,
+    "byte_equal_state_fields": {
+      "format": true,
+      "completed_updates": true,
+      "model": true,
+      "optimizer": true,
+      "sampler": true,
+      "rng": true,
+      "fine_drop_step": true
+    },
+    "source_checkpoint_unchanged": true,
+    "mlx_evaluation_directory": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin-kernel-round2-resume-20261015/evaluation"
+  },
+  "mlx_smoke": {
+    "summary": "runs/latin-kernel-round2-resume-20261015/evaluation/summary.json",
+    "attempted": 100,
+    "status": "complete",
+    "resource_report": "runs/latin-kernel-round2-resume-20261015/evaluation/resources-evaluate.json",
+    "purpose": "Checkpoint and backend compatibility, not a puzzle-accuracy experiment."
+  },
+  "resources": {
+    "memory_budget_bytes": 8589934592,
+    "gpu_work_duty_target": 0.8,
+    "maximum_candidate_gpu_endpoint_sample_bytes": 4447174656,
+    "maximum_candidate_rss_bytes": 889847808,
+    "candidate_independent_whole_device_gpu_means": [
+      0.7564516129032258,
+      0.7814754098360656,
+      0.7619672131147541,
+      0.7477049180327868,
+      0.6811475409836065
+    ],
+    "candidate_whole_device_gpu_maximum": 1.0,
+    "new_system_swapout_bytes_in_final_comparison": 0,
+    "new_system_pageout_bytes_in_final_comparison": 0,
+    "earlier_probe_guard_stop": "An earlier audit probe stopped when macOS pageouts advanced from235 to238. Later checks and the final comparisons began at238 and recorded no new writes. OS swapouts stayed731289.",
+    "gpu_measurement_scope": "Independent device-wide snapshots every0.2s between first and last logged update. The allocator enforces8GiB; reported allocations are synchronized endpoint samples."
+  },
+  "unchanged_source_sha256": {
+    "train_latin.py": "667624987731f4627bdceb28c7180b1236f60e7871a7973bd08ceee7760e995b",
+    "ncm_torch_ops.py": "bed693cc49e8070f10bf7814e946f25a034dd641534a8a3e5f29c32f74a446be",
+    "ncm_mlx.py": "fd0a219bc8529756950659ca8cb515a3429b12e122a04ce6b7d46827b31d6d9f",
+    "runs/latin9-1000/generator/state.pt": "cf82cbf55c4083fad4f2d146ec4544653cb8e4f6d89d7568721f58c248aecd51",
+    "runs/latin9-1000/generator/tokenizer-snapshot.pt": "e7a37a8e46549632314d9031b6bef102521224f94da6b0263936d0391c071b47"
+  },
+  "rejected_candidates": [
+    "Whole generator compilation and narrower compilation changed gradients.",
+    "TorchScript tracing changed gradients.",
+    "Foreach AdamW, loss caches, autocast cache retention and allocator ratio changes did not add a useful measured gain."
+  ],
+  "estimate": {
+    "training_updates": 600,
+    "training_seconds": 462.53916749997006,
+    "type": "Extrapolation from bounded trials, not a completed600update run.",
+    "subsequent_evaluation_seconds_estimate": 60
+  },
+  "review": {
+    "blockers": 0,
+    "comment_deletions": 0,
+    "comment_restores": 0,
+    "open_comment_findings": 0
+  },
+  "command": "caffeinate -i .venv/bin/python continue_latin.py --run runs/latin9-exact-pooling --evaluate"
+}

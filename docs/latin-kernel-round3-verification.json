@@ -1,0 +1,220 @@
+{
+  "status": "verified_exact_gradients_faster",
+  "ten_percent_target_met": false,
+  "focused_tests_passed": 109,
+  "execution": {
+    "format": "ncm-resource-execution-v1",
+    "policy": {
+      "gpu_duty_cycle": 0.8,
+      "memory_limit_bytes": 8589934592,
+      "rss_limit_bytes": 8589934592,
+      "min_available_bytes": 6442450944,
+      "gpu_sample_interval_seconds": 1.0,
+      "pacing_method": "idle-credit"
+    },
+    "fast_frozen_targets": true,
+    "generator_precision": "bf16",
+    "attention_kernel": "bf16-math",
+    "frozen_pooling": "metal",
+    "checkpoint_copies": "batched",
+    "runtime_sha256": {
+      "resource_runner.py": "65521baf43d2d283d83b30318b4e66f3d206867be30096c1982f15340183f056",
+      "ncm_resource.py": "dae820a9a92783c97b9bc5b7c7907fc03f9423ff16aa27fb9c27c7a62b2c3839",
+      "ncm_fast_targets.py": "c14744089b26241cdbd4caf3c2f01d3c14915279c51306e247a2b5b82cb58106",
+      "ncm_attention.py": "269b06bff2ddd37593d1a5afaaffa14fe6affdf19204013c0810eda00633d2b0",
+      "ncm_area_pool.py": "2f0b6c04414a0d34297609dcd6690015a4d285abd406c05d27749ac24cd0d1f6",
+      "ncm_checkpoint.py": "221dc35e704917383248191586c1bfb2a013a74fdb8c61e9630ac4e2701bb364"
+    }
+  },
+  "measurement_execution": {
+    "format": "ncm-resource-execution-v1",
+    "policy": {
+      "gpu_duty_cycle": 0.8,
+      "memory_limit_bytes": 8589934592,
+      "rss_limit_bytes": 8589934592,
+      "min_available_bytes": 6442450944,
+      "gpu_sample_interval_seconds": 1.0,
+      "pacing_method": "idle-credit"
+    },
+    "fast_frozen_targets": true,
+    "generator_precision": "bf16",
+    "attention_kernel": "bf16-math",
+    "frozen_pooling": "metal",
+    "checkpoint_copies": "batched",
+    "runtime_sha256": {
+      "resource_runner.py": "65521baf43d2d283d83b30318b4e66f3d206867be30096c1982f15340183f056",
+      "ncm_resource.py": "dae820a9a92783c97b9bc5b7c7907fc03f9423ff16aa27fb9c27c7a62b2c3839",
+      "ncm_fast_targets.py": "c14744089b26241cdbd4caf3c2f01d3c14915279c51306e247a2b5b82cb58106",
+      "ncm_attention.py": "269b06bff2ddd37593d1a5afaaffa14fe6affdf19204013c0810eda00633d2b0",
+      "ncm_area_pool.py": "2f0b6c04414a0d34297609dcd6690015a4d285abd406c05d27749ac24cd0d1f6",
+      "ncm_checkpoint.py": "34973f1519977dc5d74f4194c5a623d49474da4ec06d59a256c8a0f0a70bc68e"
+    }
+  },
+  "comment_review": {
+    "change": "Removed only the module docstring from ncm_checkpoint.py after comment review.",
+    "executable_ast_equal": true,
+    "before_sha256": "34973f1519977dc5d74f4194c5a623d49474da4ec06d59a256c8a0f0a70bc68e",
+    "after_sha256": "221dc35e704917383248191586c1bfb2a013a74fdb8c61e9630ac4e2701bb364",
+    "comment_deletions": 1,
+    "comment_restores": 0,
+    "open_comment_findings": 0
+  },
+  "comparison": {
+    "artifact": "runs/latin-kernel-round3-training-ab-20261015/report.json",
+    "summary": {
+      "baseline": {
+        "count": 5,
+        "median_training_seconds": 40.4012137910031,
+        "minimum_training_seconds": 40.260958082995785,
+        "maximum_training_seconds": 40.99727412500215,
+        "median_whole_process_seconds": 40.965454915996816,
+        "median_seconds_per_update": 0.751629243339994
+      },
+      "optimized": {
+        "count": 5,
+        "median_training_seconds": 38.2308545410051,
+        "minimum_training_seconds": 38.140722707998066,
+        "maximum_training_seconds": 38.46029825000005,
+        "median_whole_process_seconds": 38.77790562500013,
+        "median_seconds_per_update": 0.7085127075000491
+      }
+    },
+    "training_time_reduction_fraction": 0.05372014962781424,
+    "whole_process_time_reduction_fraction": 0.05339985349808618,
+    "alternating_trials_per_side": 5,
+    "updates_per_trial": 50,
+    "global_batch": 32,
+    "physical_microbatch": 16,
+    "periodic_checkpoint_updates": [
+      1025,
+      1050
+    ],
+    "scope": "Actual CLI preparation, training, mandatory telemetry, 80 percent pacing, periodic checkpoint copies, final save, export and export verification. Evaluation excluded on both sides.",
+    "byte_equal_non_provenance_state_in_all_five_pairs": true,
+    "limiter": "Generator matrix operations remain unchanged. Measured post-sync CPU telemetry is about1.6seconds per50updates, previously followed by redundant cooling sleep. Checkpoint copies were individually synchronized."
+  },
+  "exact_gradient_probe": {
+    "artifact": "runs/latin-kernel-round3-gradient-parity-final-20261015/report.json",
+    "checks": [
+      {
+        "update": 1001,
+        "byte_equal": {
+          "raw_gradients": true,
+          "clipped_gradients": true,
+          "model": true,
+          "optimizer": true,
+          "rng": true,
+          "sampler": true,
+          "loss": true,
+          "gradient_norm": true
+        }
+      },
+      {
+        "update": 1002,
+        "byte_equal": {
+          "raw_gradients": true,
+          "clipped_gradients": true,
+          "model": true,
+          "optimizer": true,
+          "rng": true,
+          "sampler": true,
+          "loss": true,
+          "gradient_norm": true
+        }
+      }
+    ],
+    "dropout": "enabled",
+    "comparison": "Tensor shapes, dtypes and uint8 byte arrays, including signed zero."
+  },
+  "checkpoint_copy_probe": {
+    "artifact": "runs/latin-kernel-round3-checkpoint-copy-20261015/report.json",
+    "summary": {
+      "blocking": {
+        "median_seconds": 0.07133037500170758,
+        "minimum_seconds": 0.06749283399403794,
+        "maximum_seconds": 0.07579983399773482
+      },
+      "batched": {
+        "median_seconds": 0.009045583006809466,
+        "minimum_seconds": 0.008624166999652516,
+        "maximum_seconds": 0.011164584000653122
+      }
+    },
+    "copy_time_reduction_fraction": 0.8731875024266601,
+    "scope": "Transfer and completion of an actual checkpoint tensor tree. Does not include serialization or training.",
+    "byte_equal": true
+  },
+  "resume": {
+    "artifact": "runs/latin-kernel-round3-resume-final-20261015/report.json",
+    "split_run": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin-kernel-round3-resume-final-20261015-split",
+    "whole_run": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin-kernel-round3-resume-final-20261015-whole",
+    "completed_updates": 1002,
+    "byte_equal_state_fields": {
+      "format": true,
+      "completed_updates": true,
+      "model": true,
+      "optimizer": true,
+      "sampler": true,
+      "rng": true,
+      "fine_drop_step": true
+    },
+    "source_checkpoint_unchanged": true,
+    "mlx_evaluation_directory": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin-kernel-round3-resume-final-20261015/evaluation"
+  },
+  "tests": {
+    "artifact": "runs/latin-kernel-round3-tests-20261015/report.json",
+    "passed": 109
+  },
+  "resources": {
+    "memory_budget_bytes": 8589934592,
+    "gpu_work_duty_target": 0.8,
+    "maximum_candidate_gpu_endpoint_sample_bytes": 4447174656,
+    "maximum_candidate_rss_bytes": 1021378560,
+    "independent_whole_invocation_gpu_means": [
+      0.6981286549707603,
+      0.7983625730994152,
+      0.7732748538011696,
+      0.7701754385964912,
+      0.7925
+    ],
+    "independent_between_first_and_last_update_gpu_means": [
+      0.753,
+      0.8625333333333334,
+      0.8446,
+      0.836,
+      0.8516
+    ],
+    "whole_device_sample_maximum": 0.99,
+    "new_swapout_bytes": 0,
+    "new_pageout_bytes": 0,
+    "scope": "Optional independent device-wide snapshots every0.2seconds. These are sampled arithmetic means, not continuous per-process occupancy. Guarded unit duty is enforced separately; checkpoint transfers and some input uploads fall outside those units."
+  },
+  "unchanged_source_sha256": {
+    "train_latin.py": "667624987731f4627bdceb28c7180b1236f60e7871a7973bd08ceee7760e995b",
+    "ncm_torch_ops.py": "bed693cc49e8070f10bf7814e946f25a034dd641534a8a3e5f29c32f74a446be",
+    "ncm_mlx.py": "fd0a219bc8529756950659ca8cb515a3429b12e122a04ce6b7d46827b31d6d9f",
+    "runs/latin9-1000/generator/state.pt": "cf82cbf55c4083fad4f2d146ec4544653cb8e4f6d89d7568721f58c248aecd51",
+    "runs/latin9-1000/generator/tokenizer-snapshot.pt": "e7a37a8e46549632314d9031b6bef102521224f94da6b0263936d0391c071b47"
+  },
+  "rejected_candidates": [
+    {
+      "candidate": "linear-layout",
+      "artifact": "runs/latin-kernel-round3-linear-layout-20261015/report.json"
+    },
+    {
+      "candidate": "dispatch",
+      "artifact": "runs/latin-kernel-round3-dispatch-20261015/report.json"
+    },
+    {
+      "candidate": "clip-noop",
+      "artifact": "runs/latin-kernel-round3-clip-noop-20261015/report.json"
+    }
+  ],
+  "estimate": {
+    "training_updates": 600,
+    "training_seconds": 427.91284366603213,
+    "subsequent_evaluation_seconds": 60,
+    "type": "Extrapolation from bounded trials. No full600update run was launched."
+  },
+  "command": "caffeinate -i .venv/bin/python continue_latin.py --run runs/latin9-fast-exact --evaluate"
+}

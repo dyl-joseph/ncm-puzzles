@@ -1,0 +1,119 @@
+{
+  "status": "verified",
+  "target": "At least ten percent shorter complete training for equal updates and puzzles.",
+  "focused_cpu_tests_passed": 77,
+  "execution": {
+    "format": "ncm-resource-execution-v1",
+    "policy": {
+      "gpu_duty_cycle": 0.8,
+      "memory_limit_bytes": 8589934592,
+      "rss_limit_bytes": 8589934592,
+      "min_available_bytes": 6442450944,
+      "gpu_sample_interval_seconds": 1.0
+    },
+    "fast_frozen_targets": true,
+    "generator_precision": "bf16",
+    "attention_kernel": "bf16-math",
+    "runtime_sha256": {
+      "resource_runner.py": "0dbdd15b2a38bace2a6c6baa53f56d7b2f7ca8bfa798e9dc496174a54e563a55",
+      "ncm_resource.py": "db8b9aa7df5a7f666ee8ddf8efa258b3249bf7394baa13db523bd728c94fcc6d",
+      "ncm_fast_targets.py": "098885b0122c2e4322b0d05e4f16272f941c4a6d40b4c97d4343d056d1283df0",
+      "ncm_attention.py": "269b06bff2ddd37593d1a5afaaffa14fe6affdf19204013c0810eda00633d2b0"
+    }
+  },
+  "comparison": {
+    "artifact": "runs/latin-kernel-training-ab-20261015/report.json",
+    "summary": {
+      "reference": {
+        "count": 5,
+        "median_training_seconds": 21.467421415996796,
+        "minimum_training_seconds": 21.413851916004205,
+        "maximum_training_seconds": 22.216650875001505,
+        "median_whole_process_seconds": 22.02026774999831,
+        "median_seconds_per_update": 0.9432801166498394
+      },
+      "bf16-math": {
+        "count": 5,
+        "median_training_seconds": 18.848320416000206,
+        "minimum_training_seconds": 18.523504999997385,
+        "maximum_training_seconds": 19.32151733399951,
+        "median_whole_process_seconds": 19.386203707996174,
+        "median_seconds_per_update": 0.8030589187499573
+      }
+    },
+    "training_time_reduction_fraction": 0.12200352102115652,
+    "whole_process_time_reduction_fraction": 0.11961998245922056,
+    "alternating_trials_per_side": 5,
+    "updates_per_trial": 20,
+    "scope": "Actual CLI continuation. Includes preparation, same training workload, pre/post memory checks, 80 percent duty pauses, checkpoint/export, and verification. No evaluation inside the comparison.",
+    "source_checkpoint_unchanged": true
+  },
+  "kernel_probe": {
+    "artifact": "runs/latin-kernel-reduced-math-dropout-20261015/report.json",
+    "summary": {
+      "baseline": {
+        "count": 5,
+        "median_active_seconds": 0.6716397080017487,
+        "min_active_seconds": 0.6590894580003805,
+        "max_active_seconds": 0.6941689169980236,
+        "median_paced_wall_seconds": 0.9433605829981389,
+        "projected_paced_seconds": 0.8395496350021858
+      },
+      "optimized": {
+        "count": 5,
+        "median_active_seconds": 0.5508080829968094,
+        "min_active_seconds": 0.5479009170012432,
+        "max_active_seconds": 0.5701911249998375,
+        "median_paced_wall_seconds": 0.7985200420007459,
+        "projected_paced_seconds": 0.6885101037460117
+      }
+    },
+    "parity": {
+      "exact_codes": true,
+      "exact_context": true,
+      "context_max_error": 0.0,
+      "gradient_max_error": 0.00018310546875,
+      "parameter_max_error": 4.789326339960098e-07,
+      "loss_error": 0.00011974573135375977,
+      "mps_rng_equal": true,
+      "gradient_cosine": 0.9998881995098375,
+      "relative_gradient_error": 0.015085277837579764,
+      "relative_loss_error": 0.00019715686841682888,
+      "comparison_dropout": "training"
+    },
+    "limiter": "Generator attention forward and backward. Reduced math avoids FP32 Q/K/V promotion in composite MPS SDPA; synchronized forward and backward both shrink. AdamW, batch count, memory checks and idle policy remain unchanged.",
+    "profile_scope": "Reset/loading and resource pacing are outside CPU profiling. Profiled runs are excluded from timing trials. CPU dispatch shares are not GPU kernel shares."
+  },
+  "resource_checks": {
+    "memory_budget_bytes": 8589934592,
+    "gpu_duty_target": 0.8,
+    "new_system_swapouts": 0,
+    "new_system_pageouts": 0,
+    "largest_candidate_gpu_endpoint_sample_bytes": 4447174656,
+    "candidate_observed_global_gpu_means": [
+      0.656,
+      0.77171875,
+      0.7858730158730158,
+      0.7831746031746032,
+      0.77515625
+    ],
+    "global_gpu_scope": "Independent snapshots every0.2 seconds between first and last logged training updates. Device-wide, with other apps open. Brief100percent bursts occurred."
+  },
+  "state_checks": {
+    "all_ten_exports_valid": true,
+    "model_and_adamw_fp32": true,
+    "all_sampler_states_match_exact_source_batch_replay": true,
+    "dropout_on_rng_matches_between_kernels": true,
+    "subsequent_resume": "1020 to1021 with matching AdamW steps and sampler cursor32672",
+    "evaluation": "100 completed MLX FP32 predictions from the resumed export",
+    "source_tokenizer_and_original_trainer_unchanged": true,
+    "note": "The final candidate trial was advanced by one saved resume update after comparison metrics were recorded. Its latest invocation reports now describe that resume."
+  },
+  "evaluation_artifact": "runs/latin-kernel-training-ab-20261015-bf16-math-5/evaluation-validation-20261015T041723.662730Z/summary.json",
+  "caveats": [
+    "BF16 attention arithmetic changes rounding. This short check does not establish long-run learning equivalence.",
+    "Twenty-update complete invocations establish the measured speedup; full600-update ETA remains an extrapolation.",
+    "The hardware activity cap is an average duty target with bursts. System-wide zero swap cannot be guaranteed."
+  ],
+  "official_source": "https://github.com/pytorch/pytorch/blob/5c4886908584029761b579af026dcfb627c84070/aten/src/ATen/native/transformers/attention.cpp#L821"
+}

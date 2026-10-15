@@ -1,0 +1,165 @@
+{
+  "status": "verified",
+  "checks": {
+    "focused_cpu_tests_passed": 70,
+    "generator_continuation_updates": 20,
+    "subsequent_resume_updates": 1,
+    "final_updates": 1021,
+    "optimizer_step": 1021,
+    "sampler_cursor": 32672,
+    "sampler_matches_21_exact_batches_from_source": true,
+    "source_checkpoint_and_tokenizer_unchanged": true,
+    "trainer_and_mps_adapter_unchanged": true,
+    "upstream_clean": true,
+    "saved_model_and_adamw_moments_float32": true,
+    "evaluation_float32": true,
+    "evaluation_counts": [
+      100,
+      8
+    ],
+    "new_system_swapouts": 0,
+    "new_system_pageouts": 0
+  },
+  "execution": {
+    "format": "ncm-resource-execution-v1",
+    "policy": {
+      "gpu_duty_cycle": 0.8,
+      "memory_limit_bytes": 8589934592,
+      "rss_limit_bytes": 8589934592,
+      "min_available_bytes": 6442450944,
+      "gpu_sample_interval_seconds": 1.0
+    },
+    "fast_frozen_targets": true,
+    "generator_precision": "bf16",
+    "runtime_sha256": {
+      "resource_runner.py": "bc7c0ecf3fdc725946867711ab0a9f0418527c0647800d324f0a9870cde3489d",
+      "ncm_resource.py": "db8b9aa7df5a7f666ee8ddf8efa258b3249bf7394baa13db523bd728c94fcc6d",
+      "ncm_fast_targets.py": "098885b0122c2e4322b0d05e4f16272f941c4a6d40b4c97d4343d056d1283df0"
+    }
+  },
+  "gpu_observation": {
+    "steady_training_sample_mean": 0.7438157894736842,
+    "steady_training_sample_count": 76,
+    "maximum": 0.99,
+    "sampling_interval_seconds": 0.2,
+    "scope": "Whole-device snapshots during updates 1001 through 1020. Other apps were running."
+  },
+  "actual_training": {
+    "updates": 20,
+    "seconds": 18.763973333007016,
+    "seconds_per_update": 0.9381986666503508,
+    "resources": {
+      "format": "ncm-resource-report-v1",
+      "backend": "mps",
+      "policy": {
+        "gpu_duty_cycle": 0.8,
+        "memory_limit_bytes": 8589934592,
+        "rss_limit_bytes": 8589934592,
+        "min_available_bytes": 6442450944,
+        "gpu_sample_interval_seconds": 1.0
+      },
+      "work_units": 20,
+      "active_seconds": 15.046814456996799,
+      "idle_seconds": 3.883001374990272,
+      "work_duty_cycle": 0.7948737901385767,
+      "peak_gpu_allocated_bytes": 4711514112,
+      "peak_rss_bytes": 891240448,
+      "gpu_memory_measurement": "Maximum synchronized endpoint allocation sample. Temporary between-sample allocations are not measured.",
+      "initial_memory": {
+        "physical_bytes": 51539607552,
+        "available_bytes": 28141797376,
+        "rss_bytes": 207044608,
+        "pressure_level": 1,
+        "swap_used_bytes": 895746048,
+        "swapouts": 731289,
+        "pageouts": 233,
+        "page_size_bytes": 16384
+      },
+      "latest_memory": {
+        "physical_bytes": 51539607552,
+        "available_bytes": 22506520576,
+        "rss_bytes": 891240448,
+        "pressure_level": 1,
+        "swap_used_bytes": 895746048,
+        "swapouts": 731289,
+        "pageouts": 233,
+        "page_size_bytes": 16384
+      },
+      "new_swapout_bytes": 0,
+      "new_pageout_bytes": 0,
+      "global_gpu_activity": {
+        "samples": 11,
+        "mean": 0.6363636363636364,
+        "minimum": 0.0,
+        "maximum": 0.99
+      },
+      "stop_reason": null
+    },
+    "scope": "Includes synchronized pauses, telemetry, initial startup idle and final checkpoint."
+  },
+  "benchmark": {
+    "artifact": "runs/latin-resource-benchmark-bf16-verified-20261015/report.json",
+    "summary": {
+      "baseline": {
+        "count": 5,
+        "median_active_seconds": 0.8179740420018788,
+        "min_active_seconds": 0.8165072500050883,
+        "max_active_seconds": 0.8180554999999003,
+        "projected_paced_seconds": 1.0224675525023486
+      },
+      "optimized": {
+        "count": 5,
+        "median_active_seconds": 0.6521269579970976,
+        "min_active_seconds": 0.6516063329981989,
+        "max_active_seconds": 0.6528170830060844,
+        "projected_paced_seconds": 0.815158697496372
+      }
+    },
+    "parity": {
+      "exact_codes": true,
+      "exact_context": true,
+      "context_max_error": 0.0,
+      "gradient_max_error": 0.0005029961466789246,
+      "parameter_max_error": 6.09084963798523e-07,
+      "loss_error": 8.502602577209473e-05,
+      "mps_rng_equal": true,
+      "gradient_cosine": 0.9998421702136105,
+      "relative_gradient_error": 0.018142535042877946,
+      "relative_loss_error": 0.00015135307420215761,
+      "comparison_dropout": "disabled for deterministic precision comparison only"
+    },
+    "speedup": 1.254317172401757,
+    "scope": "Five alternating full optimizer updates per side, global batch 32 and microbatch 16. Reference FP32 versus fused frozen targets plus BF16 generator forward, FP32 loss and optimizer. Active work only. Separate profiler trials excluded. Precision comparison disables dropout; timings use training dropout.",
+    "limiter": "Generator backward falls from about 0.438 seconds to 0.333 seconds; forward falls from 0.339 seconds to 0.278 seconds. AdamW remains about 0.040 seconds."
+  },
+  "rejected_candidates": [
+    {
+      "candidate": "microbatch 32 under 8 GiB MPS cap",
+      "reason": "Allocator OOM during generator forward; cap remained enabled."
+    },
+    {
+      "candidate": "BF16 microbatch 32 under 8 GiB MPS cap",
+      "reason": "Allocator OOM during training attention after warmup; microbatch 16 retained."
+    },
+    {
+      "candidate": "fused MPS AdamW",
+      "reason": "One-step weights differed by 2.384185791015625e-7, above strict 1e-7 verification threshold; original AdamW retained."
+    }
+  ],
+  "reports": [
+    "runs/latin-resource-bf16-proof-observation-20261015.json",
+    "runs/latin-resource-bf16-resume-observation-20261015.json",
+    "runs/latin9-resource-bf16-proof-20261015/continuation-result.json",
+    "runs/latin9-resource-bf16-proof-20261015/resources-train-first-20.json",
+    "runs/latin9-resource-bf16-proof-20261015/resources-train.json"
+  ],
+  "limits": [
+    "OS-wide zero swap is not guaranteed. Existing swap is not cleared.",
+    "80 percent is a per-process duty target with bursts, not a hard instantaneous hardware cap.",
+    "MLX memory limit is a guideline with peak checks. MPS memory limit is enforced by its allocator.",
+    "MPS allocation maxima in reports are synchronized endpoint samples, not continuous peaks.",
+    "Smaller microbatches preserve the global objective but alter dropout draws and floating-point accumulation versus the old microbatch32 run.",
+    "BF16 generator computation changes rounding. Single-batch gradient/loss agreement and short finite training do not establish long-run convergence equivalence.",
+    "The earlier BF16 exploratory report used float32 CPU cosine over 25M values and returned an impossible 1.017; it was not accepted. Accepted cosine was recomputed with float64 dot product and norms."
+  ]
+}

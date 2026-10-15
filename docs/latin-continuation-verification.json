@@ -1,0 +1,75 @@
+{
+  "command": "caffeinate -i .venv/bin/python continue_latin.py --evaluate",
+  "source_updates": 400,
+  "target_updates": 1000,
+  "new_updates_target": 600,
+  "continuation_learning_rate": 3e-05,
+  "checks": {
+    "unit_tests_passed": 19,
+    "initial_dynamic_state_exactly_preserved": {
+      "all_dynamic_state_exactly_preserved": true,
+      "completed_updates": 400,
+      "target_updates": 1000,
+      "learning_rate_at_401": 3e-05,
+      "source_checkpoint_sha256": "ebec2edc5aba52c7056501946cceedad90a19765deafd0d64c1c028cbeddbdbd",
+      "source_stage_spec": {
+        "name": "generator",
+        "updates": 400,
+        "batch_size": 32,
+        "microbatch_size": 32,
+        "peak_lr": 0.0003,
+        "floor_lr": 3e-05,
+        "warmup_updates": 20
+      }
+    },
+    "optimizer_and_sampler_continued": {
+      "optimizer_step_counters_advanced_from_400_to_402": true,
+      "sampler_cursor_advanced_from_12800_to_12864": true,
+      "frozen_tokenizer_snapshot_unchanged": true
+    },
+    "mps_resumed_and_timed_stop": {
+      "completed_updates": 433,
+      "continuation_updates": 33,
+      "evaluation_output": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin9-continue-verified/evaluation-validation-20261015T024000.248105Z",
+      "export": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin9-continue-verified/generator/export",
+      "initial_updates": 402,
+      "new_updates": 31,
+      "ready": true,
+      "returncode": 0,
+      "source_completed_updates": 400,
+      "source_run": "/Users/dylanjoseph/.t3/projects/ncm-chess/runs/latin9-10min",
+      "stop_reason": "deadline",
+      "target_updates": 1000,
+      "training_elapsed_seconds": 28.642245250000997
+    },
+    "final_proof_optimizer_step": 433,
+    "final_proof_sampler_cursor": 13856,
+    "mlx_validation_completed": 8,
+    "all_original_source_files_unchanged": true,
+    "original_trainer_unchanged": true,
+    "default_user_run_not_started": true
+  },
+  "validation_baselines": {
+    "split": "validation",
+    "count": 2000,
+    "clue_count": 30,
+    "seed": 42,
+    "cases_sha256": "6b684c4e9b112f5d8117ca356c85cc07a61b55e44f60426a95f1892f3c725570",
+    "latin400": {
+      "solved": 0,
+      "given_cell_agreement": 0.873,
+      "summary": "runs/compare-latin400-validation2000/summary.json"
+    },
+    "sudoku": {
+      "solved": 13,
+      "given_cell_agreement": 0.9807,
+      "summary": "runs/compare-sudoku-validation2000/summary.json"
+    }
+  },
+  "scope": "Bounded execution and state-continuity verification, not a measurement of trained solver quality. Full 600-update continuation is left for the user command.",
+  "principles": {
+    "Model the Domain": "The continuation helper owns checkpoint transition and deadline. The original trainer owns model updates and exports.",
+    "Prove It Works": "Actual MPS continuation, optimizer and sampler advancement, timed saving, and automatic MLX validation were verified.",
+    "Explain the Number": "The 8-9 minute training ETA is extrapolated from measured batch-32 updates. Evaluation runs after the training deadline."
+  }
+}
