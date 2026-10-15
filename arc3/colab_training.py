@@ -58,7 +58,7 @@ def run_process(command, *, timeout, log=None, status=None):
     with log.open("w+b") if log else tempfile.TemporaryFile() as stream:
         process = subprocess.Popen(list(map(str, command)), cwd=ROOT, start_new_session=True,
                                    stdout=stream, stderr=subprocess.STDOUT,
-                                   env={**os.environ, "MLX_ENABLE_TF32": "0"})
+                                   env={**os.environ, "MLX_ENABLE_TF32": "0", "MPLBACKEND": "Agg"})
         decoder = codecs.getincrementaldecoder("utf-8")(errors="replace")
         offset = 0
 

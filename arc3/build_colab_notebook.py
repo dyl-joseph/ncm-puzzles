@@ -52,7 +52,7 @@ def notebook(revision):
         [Colab runtime limits](https://research.google.com/colaboratory/faq.html).
     """), cell("code", """
         TRAIN_HOURS = 4
-        RUN_NAME = "arc3-ls20-4h-v2"
+        RUN_NAME = "arc3-ls20-4h-v3"
         SAVE_TO_DRIVE = True
         BASE_SEED = 42
         BLOCK_SECONDS = 600
@@ -94,8 +94,8 @@ def notebook(revision):
         from the last verified checkpoint. A block with no verified optimizer update stops with
         its error. Local-only storage disappears when Colab resets. Allow several GB for evidence.
 
-        This notebook starts a new v2 run from the bundled checkpoint. Your older v1 run stays
-        in its original folder. Open this notebook in a fresh Colab session so its Python imports
+        This notebook starts a new v3 run from the bundled checkpoint. Your older runs stay
+        in their original folders. Open this notebook in a fresh Colab session so its Python imports
         use the pinned source below.
     """), cell("code", """
         if SAVE_TO_DRIVE:
@@ -134,7 +134,10 @@ def notebook(revision):
         UV, PYTHON = bootstrap_environment(REPO, VENV, Path("/content/arc3-bootstrap-tools"))
         print(f"Pinned source {{actual}}. Isolated neural interpreter {{PYTHON}}.")
     '''), cell("markdown", """
-        ## Check the actual model on CUDA
+        ## Check the SDK and actual model on CUDA
+
+        First check that the isolated interpreter can import the game SDK before any training
+        time is reserved.
 
         This short check samples the real latent hierarchy, verifies teacher likelihoods, applies
         one synthetic gradient to disposable weights and reloads their inference controls. It is
@@ -143,6 +146,8 @@ def notebook(revision):
     """), cell("code", """
         import json
 
+        run_process([PYTHON, "-c", "from arc_agi import Arcade, OperationMode; print('SDK import passed.')"],
+                    timeout=60, log=LOCAL / "sdk-import.log")
         INITIAL_CHECKPOINT = REPO / "arc3/results/gameplay-training/checkpoint"
         run_process([PYTHON, "-m", "arc3.gpu_selfcheck", "--checkpoint", INITIAL_CHECKPOINT,
                      "--require-cuda", "--output", LOCAL / "gpu-selfcheck.json"], timeout=180,
