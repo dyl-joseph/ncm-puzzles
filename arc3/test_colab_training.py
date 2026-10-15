@@ -244,13 +244,19 @@ class ColabRunTests(unittest.TestCase):
         self.assertIn("child stdout\nchild stderr", output.getvalue())
         self.assertIn("child stdout\nchild stderr", str(failure.exception))
 
-    def test_successful_child_forwards_both_streams_and_disables_tf32(self):
+    def test_successful_child_forwards_both_streams_and_uses_headless_environment(self):
         output = io.StringIO()
         code = ("import os; os.write(1, b'success stdout\\n'); "
-                "os.write(2, b'success stderr\\n'); print('tf32=' + os.environ['MLX_ENABLE_TF32'])")
-        with redirect_stdout(output):
-            run_process([sys.executable, "-c", code], timeout=5)
-        self.assertIn("success stdout\nsuccess stderr\ntf32=0\n", output.getvalue())
+                "os.write(2, b'success stderr\\n'); print('tf32=' + os.environ['MLX_ENABLE_TF32']); "
+                "print('backend=' + os.environ['MPLBACKEND']); "
+                "print('inherited=' + os.environ['ARC3_TEST_INHERITED'])")
+        with patch.dict(os.environ, {"MPLBACKEND": "module://matplotlib_inline.backend_inline",
+                                    "ARC3_TEST_INHERITED": "preserved"}):
+            with redirect_stdout(output):
+                run_process([sys.executable, "-c", code], timeout=5)
+            self.assertEqual(os.environ["MPLBACKEND"], "module://matplotlib_inline.backend_inline")
+        self.assertIn("success stdout\nsuccess stderr\ntf32=0\nbackend=Agg\ninherited=preserved\n",
+                      output.getvalue())
 
     def test_partial_utf8_is_forwarded_before_child_exit(self):
         acknowledgement = self.root / "output-observed"
