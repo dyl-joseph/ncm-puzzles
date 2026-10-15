@@ -8,7 +8,9 @@ import subprocess
 import sys
 import tempfile
 import time
+from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 from .build_colab_notebook import notebook
 from .colab_training import (CHECKPOINT_FILES, RunSpec, TrainingRun, checkpoint_hashes,
@@ -258,7 +260,7 @@ class NotebookTests(unittest.TestCase):
                 compile(item["source"], f"notebook-cell-{index}", "exec")
                 self.assertEqual(item["outputs"], [])
         self.assertIn(f'REVISION = "{revision}"', source)
-        for expected in ("TRAIN_HOURS = 4", "mlx[cuda12]==0.32.4", "--require-cuda", "arc3.download_games",
+        for expected in ("TRAIN_HOURS = 4", "bootstrap_environment(REPO, VENV,", "--require-cuda", "arc3.download_games",
                          "arc3.colab_training", "--evaluate", 'os.environ["MLX_ENABLE_TF32"] = "0"'):
             self.assertIn(expected, source)
         for forbidden in ("render_mode", "renderer=", "KAGGLE_KEY", "KAGGLE_USERNAME", "getpass", "torch.",
@@ -268,6 +270,38 @@ class NotebookTests(unittest.TestCase):
     def test_mutable_revision_is_rejected(self):
         with self.assertRaisesRegex(ValueError, "immutable"):
             notebook("main")
+
+    def test_generated_setup_uses_the_bootstrap_on_a_host_without_venv_or_pip(self):
+        revision = "0123456789abcdef0123456789abcdef01234567"
+        setup, = [item["source"] for item in notebook(revision)["cells"]
+                  if item["cell_type"] == "code" and "REPO_URL =" in item["source"]]
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+
+            def path(value):
+                return root / Path(value).name
+
+            def git_run(command, **_):
+                self.assertEqual(command[0], "git", "The host cannot install Python environments or packages.")
+                if command[1] == "clone":
+                    Path(command[-1]).mkdir()
+
+            def git_output(command, **_):
+                if command[-1] == "origin":
+                    return "https://github.com/dyl-joseph/ncm-puzzles.git\n"
+                if command[-1] == "HEAD":
+                    return revision + "\n"
+                return ""
+
+            python = root / "managed-python"
+            namespace = {"Path": path, "subprocess": SimpleNamespace(run=git_run, check_output=git_output),
+                         "os": SimpleNamespace(chdir=lambda _: None),
+                         "sys": SimpleNamespace(path=[], executable="/usr/bin/python3")}
+            with patch("arc3.colab_bootstrap.bootstrap_environment", return_value=(root / "uv", python)) as bootstrap:
+                exec(setup, namespace)
+            bootstrap.assert_called_once_with(root / "ncm-puzzles-colab", root / "arc3-isolated-venv",
+                                              root / "arc3-bootstrap-tools")
+            self.assertEqual(namespace["PYTHON"], python)
 
 
 if __name__ == "__main__":
