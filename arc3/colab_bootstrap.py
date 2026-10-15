@@ -95,5 +95,6 @@ def bootstrap_environment(repo, venv, tools_dir):
     uv = install_uv(tools_dir)
     python = ensure_python(uv, venv)
     _run([uv, "pip", "install", "--python", python,
-          "-r", Path(repo) / "arc3/requirements-sdk.txt", "mlx[cuda12]==0.32.4"])
+          "-r", Path(repo) / "arc3/requirements-sdk.txt", "mlx[cuda12]==0.32.4",
+          "nvidia-cuda-runtime-cu12==12.9.79; sys_platform == 'linux'"])
     return uv, python

@@ -217,14 +217,23 @@ class ColabRunTests(unittest.TestCase):
         self.assertEqual(len(self.fake.calls), 3)
 
     def test_timeout_stops_the_child_process_group(self):
-        pid_file = self.root / "child.pid"
-        code = ("import os, pathlib, time; "
-                f"pathlib.Path({str(pid_file)!r}).write_text(str(os.getpid())); time.sleep(30)")
-        with self.assertRaises(subprocess.TimeoutExpired):
-            run_process([sys.executable, "-c", code], timeout=0.3, log=self.root / "child.log")
-        pid = int(pid_file.read_text())
-        with self.assertRaises(ProcessLookupError):
-            os.kill(pid, 0)
+        for log in (None, self.root / "child.log"):
+            with self.subTest(log=log):
+                pid_file = self.root / "child.pid"
+                code = ("import os, pathlib, time; "
+                        f"pathlib.Path({str(pid_file)!r}).write_text(str(os.getpid())); "
+                        "os.write(2, b'timeout diagnostic\\n'); time.sleep(30)")
+                output = io.StringIO()
+                with redirect_stdout(output):
+                    with self.assertRaises(subprocess.TimeoutExpired):
+                        run_process([sys.executable, "-c", code], timeout=0.3, log=log)
+                if log:
+                    self.assertIn("timeout diagnostic\n", log.read_text())
+                else:
+                    self.assertIn("timeout diagnostic\n", output.getvalue())
+                pid = int(pid_file.read_text())
+                with self.assertRaises(ProcessLookupError):
+                    os.kill(pid, 0)
 
     def test_child_failure_reaches_notebook_stdout_and_exception(self):
         output = io.StringIO()
@@ -235,20 +244,80 @@ class ColabRunTests(unittest.TestCase):
         self.assertIn("child stdout\nchild stderr", output.getvalue())
         self.assertIn("child stdout\nchild stderr", str(failure.exception))
 
+    def test_successful_child_forwards_both_streams_and_disables_tf32(self):
+        output = io.StringIO()
+        code = ("import os; os.write(1, b'success stdout\\n'); "
+                "os.write(2, b'success stderr\\n'); print('tf32=' + os.environ['MLX_ENABLE_TF32'])")
+        with redirect_stdout(output):
+            run_process([sys.executable, "-c", code], timeout=5)
+        self.assertIn("success stdout\nsuccess stderr\ntf32=0\n", output.getvalue())
+
+    def test_partial_utf8_is_forwarded_before_child_exit(self):
+        acknowledgement = self.root / "output-observed"
+
+        class Output(io.StringIO):
+            def write(self, value):
+                if "\u2603" in value:
+                    acknowledgement.touch()
+                return super().write(value)
+
+        code = ("import os, pathlib, time; os.write(1, b'partial \\xe2'); time.sleep(0.15); "
+                "os.write(2, b'\\x98\\x83'); "
+                f"ack = pathlib.Path({str(acknowledgement)!r}); deadline = time.monotonic() + 3\n"
+                "while not ack.exists() and time.monotonic() < deadline: time.sleep(0.01)\n"
+                "assert ack.exists(), 'Output was not forwarded while child was alive'\n"
+                "os.write(1, b' complete')")
+        output = Output()
+        with redirect_stdout(output):
+            run_process([sys.executable, "-c", code], timeout=5)
+        self.assertIn("partial \u2603 complete", output.getvalue())
+        self.assertNotIn("\ufffd", output.getvalue())
+
+    def test_large_output_has_bounded_error_tail_and_complete_explicit_log(self):
+        class Output:
+            def __init__(self):
+                self.count = 0
+                self.tail = ""
+
+            def write(self, value):
+                self.count += len(value)
+                self.tail = (self.tail + value)[-128:]
+
+            def flush(self):
+                pass
+
+        code = ("import os; os.write(1, b'X' * 200000); os.write(2, b'Y' * 200000); "
+                "os.write(2, b'last diagnostic'); raise SystemExit(7)")
+        expected_tail = "Y" * (8000 - len("last diagnostic")) + "last diagnostic"
+        for log in (None, self.root / "large-child.log"):
+            with self.subTest(log=log):
+                output = Output()
+                with redirect_stdout(output):
+                    with self.assertRaises(RuntimeError) as failure:
+                        run_process([sys.executable, "-c", code], timeout=5, log=log)
+                self.assertTrue(str(failure.exception).endswith(expected_tail))
+                self.assertLess(len(str(failure.exception)), 8300)
+                if log:
+                    self.assertEqual(log.read_bytes(), b"X" * 200000 + b"Y" * 200000 + b"last diagnostic")
+                else:
+                    self.assertGreater(output.count, 400000)
+                    self.assertTrue(output.tail.endswith("last diagnostic"))
+
     def test_descendant_is_stopped_after_leader_exits(self):
-        for exit_code in (0, 2):
-            with self.subTest(exit_code=exit_code):
-                pid_file = self.root / f"descendant-{exit_code}.pid"
+        for exit_code, logged in ((0, True), (2, True), (0, False), (2, False)):
+            with self.subTest(exit_code=exit_code, logged=logged):
+                pid_file = self.root / f"descendant-{exit_code}-{logged}.pid"
                 child = "import time; time.sleep(30)"
                 leader = ("import pathlib, subprocess, sys; "
                           f"p=subprocess.Popen([sys.executable, '-c', {child!r}]); "
                           f"pathlib.Path({str(pid_file)!r}).write_text(str(p.pid)); sys.exit({exit_code})")
                 command = [sys.executable, "-c", leader]
+                log = self.root / f"leader-{exit_code}.log" if logged else None
                 if exit_code:
                     with self.assertRaisesRegex(RuntimeError, "Process failed"):
-                        run_process(command, timeout=5, log=self.root / f"leader-{exit_code}.log")
+                        run_process(command, timeout=5, log=log)
                 else:
-                    run_process(command, timeout=5, log=self.root / f"leader-{exit_code}.log")
+                    run_process(command, timeout=5, log=log)
                 pid = int(pid_file.read_text())
                 for _ in range(100):
                     state = subprocess.run(["ps", "-p", str(pid), "-o", "stat="], text=True,
@@ -272,7 +341,8 @@ class NotebookTests(unittest.TestCase):
                 self.assertEqual(item["outputs"], [])
         self.assertIn(f'REVISION = "{revision}"', source)
         for expected in ("TRAIN_HOURS = 4", "bootstrap_environment(REPO, VENV,", "--require-cuda", "arc3.download_games",
-                         "arc3.colab_training", "--evaluate", 'os.environ["MLX_ENABLE_TF32"] = "0"'):
+                         "arc3.colab_training", "--evaluate", 'os.environ["MLX_ENABLE_TF32"] = "0"',
+                         'log=LOCAL / "gpu-selfcheck.log"'):
             self.assertIn(expected, source)
         for forbidden in ("render_mode", "renderer=", "KAGGLE_KEY", "KAGGLE_USERNAME", "getpass", "torch.",
                           'checkout", "main', "api_key ="):

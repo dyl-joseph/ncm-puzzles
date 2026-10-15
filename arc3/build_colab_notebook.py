@@ -141,7 +141,8 @@ def notebook(revision):
 
         INITIAL_CHECKPOINT = REPO / "arc3/results/gameplay-training/checkpoint"
         run_process([PYTHON, "-m", "arc3.gpu_selfcheck", "--checkpoint", INITIAL_CHECKPOINT,
-                     "--require-cuda", "--output", LOCAL / "gpu-selfcheck.json"], timeout=180)
+                     "--require-cuda", "--output", LOCAL / "gpu-selfcheck.json"], timeout=180,
+                    log=LOCAL / "gpu-selfcheck.log")
         print(json.dumps(json.loads((LOCAL / "gpu-selfcheck.json").read_text()), indent=2))
     """), cell("markdown", """
         ## Download the public games
@@ -157,8 +158,14 @@ def notebook(revision):
                   "--hours", TRAIN_HOURS, "--block-seconds", BLOCK_SECONDS, "--seed", BASE_SEED,
                   "--checkpoint", INITIAL_CHECKPOINT, "--manifest", GAME_MANIFEST,
                   "--environments-dir", ENVIRONMENTS]
-    """), cell("markdown", """
+    """), cell("markdown", f"""
         ## Train or continue verified weight warm starts
+
+        This cell launches the game controller and GPU trainer. The
+        [NCM generator](https://github.com/dyl-joseph/ncm-puzzles/blob/{revision}/arc3/mlx_ncm.py)
+        receives real game rewards through the
+        [policy-gradient update](https://github.com/dyl-joseph/ncm-puzzles/blob/{revision}/arc3/gameplay_worker.py#L163).
+        The tokenizer stays frozen.
 
         Progress appears after every block. Per-episode logs stay in the local work directory.
         Every clean block is independently verified, its complete trace is compressed and checked

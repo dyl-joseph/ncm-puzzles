@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import codecs
 from dataclasses import asdict, dataclass
 import hashlib
 import json
@@ -15,6 +16,7 @@ import shutil
 import signal
 import subprocess
 import sys
+import tempfile
 import time
 from typing import Literal
 
@@ -53,47 +55,65 @@ def checkpoint_hashes(path):
 
 def run_process(command, *, timeout, log=None, status=None):
     print("Running " + " ".join(map(str, command)), flush=True)
-    stream = log.open("w") if log else None
-    process = subprocess.Popen(list(map(str, command)), cwd=ROOT, start_new_session=True,
-                               stdout=stream, stderr=subprocess.STDOUT if stream else None,
-                               env={**os.environ, "MLX_ENABLE_TF32": "0"})
-    try:
-        deadline = time.monotonic() + timeout
-        while True:
-            try:
-                return_code = process.wait(timeout=min(30, max(0.001, deadline - time.monotonic())))
-                break
-            except subprocess.TimeoutExpired:
-                if time.monotonic() >= deadline:
-                    raise
-                if status and status.exists():
-                    print(json.dumps({"training_progress": json.loads(status.read_text())}), flush=True)
-        if return_code:
-            tail = ""
+    with log.open("w+b") if log else tempfile.TemporaryFile() as stream:
+        process = subprocess.Popen(list(map(str, command)), cwd=ROOT, start_new_session=True,
+                                   stdout=stream, stderr=subprocess.STDOUT,
+                                   env={**os.environ, "MLX_ENABLE_TF32": "0"})
+        decoder = codecs.getincrementaldecoder("utf-8")(errors="replace")
+        offset = 0
+
+        def forward_output(*, final=False):
+            nonlocal offset
             if log:
-                stream.flush()
-                with log.open("rb") as source:
-                    source.seek(max(0, log.stat().st_size - 8000))
-                    tail = source.read().decode(errors="replace")
-            raise RuntimeError(f"Process failed with exit {return_code}. Log {log}\n{tail}")
-    finally:
-        if process.poll() is None:
+                return
+            end = os.fstat(stream.fileno()).st_size
+            if not final:
+                end = min(end, offset + 1024 * 1024)
+            while offset < end:
+                chunk = os.pread(stream.fileno(), min(65536, end - offset), offset)
+                offset += len(chunk)
+                sys.stdout.write(decoder.decode(chunk))
+            if final:
+                sys.stdout.write(decoder.decode(b"", final=True))
+            sys.stdout.flush()
+
+        try:
+            deadline = time.monotonic() + timeout
+            next_status = time.monotonic() + 30
+            while True:
+                forward_output()
+                try:
+                    return_code = process.wait(timeout=min(0.1, max(0.001, deadline - time.monotonic())))
+                    break
+                except subprocess.TimeoutExpired:
+                    now = time.monotonic()
+                    if now >= deadline:
+                        raise
+                    if now >= next_status:
+                        if status and status.exists():
+                            print(json.dumps({"training_progress": json.loads(status.read_text())}), flush=True)
+                        next_status = now + 30
+        finally:
+            if process.poll() is None:
+                try:
+                    os.killpg(process.pid, signal.SIGINT)
+                except ProcessLookupError:
+                    pass
+                try:
+                    process.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    pass
             try:
-                os.killpg(process.pid, signal.SIGINT)
+                os.killpg(process.pid, signal.SIGKILL)
             except ProcessLookupError:
                 pass
-            try:
-                process.wait(timeout=10)
-            except subprocess.TimeoutExpired:
-                pass
-        try:
-            os.killpg(process.pid, signal.SIGKILL)
-        except ProcessLookupError:
-            pass
-        if process.poll() is None:
-            process.wait()
-        if stream:
-            stream.close()
+            if process.poll() is None:
+                process.wait()
+            forward_output(final=True)
+        if return_code:
+            end = os.fstat(stream.fileno()).st_size
+            tail = os.pread(stream.fileno(), min(8000, end), max(0, end - 8000)).decode(errors="replace")
+            raise RuntimeError(f"Process failed with exit {return_code}. Log {log}\n{tail}")
 
 
 @dataclass(frozen=True)

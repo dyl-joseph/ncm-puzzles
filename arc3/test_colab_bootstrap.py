@@ -103,7 +103,8 @@ class BootstrapTests(unittest.TestCase):
         self.assertEqual((uv, python), (self.uv, self.venv / "bin/python"))
         install, = [command for command in calls if command[1:3] == ["pip", "install"]]
         self.assertEqual(install, [str(self.uv), "pip", "install", "--python", str(python),
-                                  "-r", str(self.root / "repo/arc3/requirements-sdk.txt"), "mlx[cuda12]==0.32.4"])
+                                  "-r", str(self.root / "repo/arc3/requirements-sdk.txt"), "mlx[cuda12]==0.32.4",
+                                  "nvidia-cuda-runtime-cu12==12.9.79; sys_platform == 'linux'"])
 
     def wheel_download(self, corrupt=False):
         wheel_name = "uv-test.whl"
