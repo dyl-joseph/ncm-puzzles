@@ -1,0 +1,9 @@
+{
+  "source_archive": "0023-20261015T221304Z-1-001.zip",
+  "source_archive_sha256": "f78a2da8f1368857da79bb81fb9e4d9b9c858281bb8261a7d1512ebf334caa2c",
+  "source_archive_uncompressed_root": "0023",
+  "committed_block_directory": "block-0023",
+  "source_archive_included": false,
+  "original_block_files_preserved": true,
+  "frozen_evaluation_trace_uncompressed_sha256": "055af2f6f560cf0ca50c66af17549beeb3df68f1c2520242567f4daa29ae35b3"
+}

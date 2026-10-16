@@ -1,0 +1,1235 @@
+{
+  "model": "GPT-6.1 Sol",
+  "variant": "Max",
+  "harness": "standard",
+  "source_url": "https://arcprize.org/results/openai-gpt-6-1-sol",
+  "version_ids_match_march_mirror": false,
+  "changed_version_ids": [
+    "ar25-0c556536",
+    "cn04-2fe56bfb",
+    "dc22-fdcac232",
+    "ka59-38d34dbb",
+    "m0r0-492f87ba",
+    "r11l-495a7899",
+    "re86-8af5384d",
+    "s5i5-18d95033",
+    "sc25-635fd71a",
+    "sk48-d8078629",
+    "sp80-589a99af",
+    "su15-1944f8ab",
+    "tn36-ef4dde99",
+    "tu93-0768757b",
+    "vc33-5430563c"
+  ],
+  "changed_baseline_games": [
+    "ar25-0c556536",
+    "cn04-2fe56bfb",
+    "dc22-fdcac232",
+    "ft09-0d8bbf25",
+    "lp85-305b61c3",
+    "r11l-495a7899",
+    "s5i5-18d95033",
+    "sb26-7fbdac44",
+    "sp80-589a99af",
+    "tr87-cd924810",
+    "re86-8af5384d",
+    "ka59-38d34dbb",
+    "tn36-ef4dde99",
+    "m0r0-492f87ba",
+    "cd82-fb555c5d",
+    "wa30-ee6fef47",
+    "vc33-5430563c",
+    "sc25-635fd71a",
+    "ls20-9607627b",
+    "su15-1944f8ab",
+    "sk48-d8078629",
+    "lf52-271a04aa",
+    "tu93-0768757b",
+    "bp35-0a0ad940",
+    "g50t-5849a774"
+  ],
+  "games": {
+    "ar25-0c556536": {
+      "baseline_actions": [
+        32,
+        50,
+        75,
+        37,
+        89,
+        159,
+        233,
+        73
+      ],
+      "source_url": "https://arcprize.org/api/sessions/7f19e6b6-abe8-43d6-b608-6b6ea75a1567",
+      "published_run": {
+        "id": "ar25-0c556536",
+        "score": 100,
+        "levels_completed": 8,
+        "actions": 281,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          17,
+          11,
+          40,
+          22,
+          30,
+          68,
+          43,
+          50
+        ],
+        "level_baseline_actions": [
+          32,
+          50,
+          75,
+          37,
+          89,
+          159,
+          233,
+          73
+        ]
+      }
+    },
+    "cn04-2fe56bfb": {
+      "baseline_actions": [
+        29,
+        54,
+        85,
+        300,
+        208,
+        113
+      ],
+      "source_url": "https://arcprize.org/api/sessions/551d7521-dd4f-493e-b0f9-5601f3d0537b",
+      "published_run": {
+        "id": "cn04-2fe56bfb",
+        "score": 100,
+        "levels_completed": 6,
+        "actions": 241,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          17,
+          48,
+          34,
+          34,
+          61,
+          47
+        ],
+        "level_baseline_actions": [
+          29,
+          54,
+          85,
+          300,
+          208,
+          113
+        ]
+      }
+    },
+    "dc22-fdcac232": {
+      "baseline_actions": [
+        59,
+        102,
+        67,
+        98,
+        324,
+        578
+      ],
+      "source_url": "https://arcprize.org/api/sessions/1f1db2e6-3158-42dd-985c-31c60f015962",
+      "published_run": {
+        "id": "dc22-fdcac232",
+        "score": 100,
+        "levels_completed": 6,
+        "actions": 751,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          24,
+          43,
+          47,
+          63,
+          143,
+          431
+        ],
+        "level_baseline_actions": [
+          59,
+          102,
+          67,
+          98,
+          324,
+          578
+        ]
+      }
+    },
+    "ft09-0d8bbf25": {
+      "baseline_actions": [
+        43,
+        12,
+        23,
+        28,
+        65,
+        37
+      ],
+      "source_url": "https://arcprize.org/api/sessions/9cbf777c-3839-4235-9041-6801ed444794",
+      "published_run": {
+        "id": "ft09-0d8bbf25",
+        "score": 100,
+        "levels_completed": 6,
+        "actions": 78,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          4,
+          7,
+          14,
+          16,
+          21,
+          16
+        ],
+        "level_baseline_actions": [
+          43,
+          12,
+          23,
+          28,
+          65,
+          37
+        ]
+      }
+    },
+    "lp85-305b61c3": {
+      "baseline_actions": [
+        17,
+        38,
+        31,
+        16,
+        41,
+        60,
+        26,
+        159
+      ],
+      "source_url": "https://arcprize.org/api/sessions/31a1038a-bebc-4044-9394-b007d72d1f03",
+      "published_run": {
+        "id": "lp85-305b61c3",
+        "score": 100,
+        "levels_completed": 8,
+        "actions": 107,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          9,
+          8,
+          16,
+          13,
+          12,
+          20,
+          14,
+          15
+        ],
+        "level_baseline_actions": [
+          17,
+          38,
+          31,
+          16,
+          41,
+          60,
+          26,
+          159
+        ]
+      }
+    },
+    "r11l-495a7899": {
+      "baseline_actions": [
+        22,
+        33,
+        51,
+        26,
+        52,
+        49
+      ],
+      "source_url": "https://arcprize.org/api/sessions/7d4a9d4c-e1d4-441c-8444-53a9f8399766",
+      "published_run": {
+        "id": "r11l-495a7899",
+        "score": 100,
+        "levels_completed": 6,
+        "actions": 98,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          6,
+          14,
+          18,
+          15,
+          22,
+          23
+        ],
+        "level_baseline_actions": [
+          22,
+          33,
+          51,
+          26,
+          52,
+          49
+        ]
+      }
+    },
+    "s5i5-18d95033": {
+      "baseline_actions": [
+        20,
+        89,
+        106,
+        54,
+        162,
+        38,
+        86,
+        83
+      ],
+      "source_url": "https://arcprize.org/api/sessions/08c987ca-9615-4491-9f66-c9c93e411dfa",
+      "published_run": {
+        "id": "s5i5-18d95033",
+        "score": 100,
+        "levels_completed": 8,
+        "actions": 261,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          14,
+          26,
+          40,
+          30,
+          30,
+          27,
+          50,
+          44
+        ],
+        "level_baseline_actions": [
+          20,
+          89,
+          106,
+          54,
+          162,
+          38,
+          86,
+          83
+        ]
+      }
+    },
+    "sb26-7fbdac44": {
+      "baseline_actions": [
+        18,
+        28,
+        18,
+        19,
+        31,
+        23,
+        58,
+        18
+      ],
+      "source_url": "https://arcprize.org/api/sessions/533b0be7-85a7-49d0-98ba-f6e45fe135a2",
+      "published_run": {
+        "id": "sb26-7fbdac44",
+        "score": 100,
+        "levels_completed": 8,
+        "actions": 124,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          112.11072664359862
+        ],
+        "level_actions": [
+          9,
+          15,
+          15,
+          15,
+          17,
+          19,
+          17,
+          17
+        ],
+        "level_baseline_actions": [
+          18,
+          28,
+          18,
+          19,
+          31,
+          23,
+          58,
+          18
+        ]
+      }
+    },
+    "sp80-589a99af": {
+      "baseline_actions": [
+        39,
+        58,
+        25,
+        148,
+        96,
+        152
+      ],
+      "source_url": "https://arcprize.org/api/sessions/39843f76-2ab5-49be-8b13-f5929125615b",
+      "published_run": {
+        "id": "sp80-589a99af",
+        "score": 100,
+        "levels_completed": 6,
+        "actions": 162,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          5,
+          7,
+          11,
+          63,
+          36,
+          40
+        ],
+        "level_baseline_actions": [
+          39,
+          58,
+          25,
+          148,
+          96,
+          152
+        ]
+      }
+    },
+    "tr87-cd924810": {
+      "baseline_actions": [
+        54,
+        58,
+        40,
+        45,
+        71,
+        146
+      ],
+      "source_url": "https://arcprize.org/api/sessions/4bc60a69-c0fe-42e7-bec7-61bc5115e56b",
+      "published_run": {
+        "id": "tr87-cd924810",
+        "score": 100,
+        "levels_completed": 6,
+        "actions": 171,
+        "state": "WIN",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115
+        ],
+        "level_actions": [
+          25,
+          34,
+          26,
+          24,
+          28,
+          34
+        ],
+        "level_baseline_actions": [
+          54,
+          58,
+          40,
+          45,
+          71,
+          146
+        ]
+      }
+    },
+    "re86-8af5384d": {
+      "baseline_actions": [
+        26,
+        42,
+        86,
+        108,
+        189,
+        139,
+        424,
+        241
+      ],
+      "source_url": "https://arcprize.org/api/sessions/2ef09b85-3ce3-46d3-81bd-e149b4259232",
+      "published_run": {
+        "id": "re86-8af5384d",
+        "score": 77.77777777777779,
+        "levels_completed": 7,
+        "actions": 871,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          0
+        ],
+        "level_actions": [
+          20,
+          36,
+          47,
+          44,
+          63,
+          60,
+          255,
+          346
+        ],
+        "level_baseline_actions": [
+          26,
+          42,
+          86,
+          108,
+          189,
+          139,
+          424,
+          241
+        ]
+      }
+    },
+    "ka59-38d34dbb": {
+      "baseline_actions": [
+        28,
+        109,
+        51,
+        51,
+        33,
+        132,
+        326
+      ],
+      "source_url": "https://arcprize.org/api/sessions/be0f8023-d16d-4e68-9062-3f57bd8f1c6f",
+      "published_run": {
+        "id": "ka59-38d34dbb",
+        "score": 75,
+        "levels_completed": 6,
+        "actions": 870,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          115,
+          115,
+          115,
+          46.24000000000001,
+          115,
+          115,
+          0
+        ],
+        "level_actions": [
+          22,
+          50,
+          35,
+          75,
+          27,
+          94,
+          567
+        ],
+        "level_baseline_actions": [
+          28,
+          109,
+          51,
+          51,
+          33,
+          132,
+          326
+        ]
+      }
+    },
+    "tn36-ef4dde99": {
+      "baseline_actions": [
+        32,
+        72,
+        26,
+        40,
+        30,
+        55,
+        62
+      ],
+      "source_url": "https://arcprize.org/api/sessions/03081409-26bc-4a24-b680-f266c3fc6948",
+      "published_run": {
+        "id": "tn36-ef4dde99",
+        "score": 75,
+        "levels_completed": 6,
+        "actions": 420,
+        "state": "GAME_OVER",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          0
+        ],
+        "level_actions": [
+          11,
+          11,
+          11,
+          15,
+          21,
+          41,
+          310
+        ],
+        "level_baseline_actions": [
+          32,
+          72,
+          26,
+          40,
+          30,
+          55,
+          62
+        ]
+      }
+    },
+    "m0r0-492f87ba": {
+      "baseline_actions": [
+        30,
+        111,
+        203,
+        26,
+        500,
+        237
+      ],
+      "source_url": "https://arcprize.org/api/sessions/ca789fe3-1418-4517-aa39-4df3fc7712ce",
+      "published_run": {
+        "id": "m0r0-492f87ba",
+        "score": 71.42857142857143,
+        "levels_completed": 5,
+        "actions": 275,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          0
+        ],
+        "level_actions": [
+          15,
+          23,
+          100,
+          24,
+          45,
+          68
+        ],
+        "level_baseline_actions": [
+          30,
+          111,
+          203,
+          26,
+          500,
+          237
+        ]
+      }
+    },
+    "cd82-fb555c5d": {
+      "baseline_actions": [
+        55,
+        8,
+        41,
+        21,
+        23,
+        23
+      ],
+      "source_url": "https://arcprize.org/api/sessions/efe7acee-c49c-4f9d-aa15-a93265514aaf",
+      "published_run": {
+        "id": "cd82-fb555c5d",
+        "score": 62.63988095238095,
+        "levels_completed": 5,
+        "actions": 163,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          115,
+          100,
+          105.06249999999999,
+          27.5625,
+          115,
+          0
+        ],
+        "level_actions": [
+          26,
+          8,
+          40,
+          40,
+          21,
+          28
+        ],
+        "level_baseline_actions": [
+          55,
+          8,
+          41,
+          21,
+          23,
+          23
+        ]
+      }
+    },
+    "wa30-ee6fef47": {
+      "baseline_actions": [
+        71,
+        119,
+        183,
+        98,
+        368,
+        68,
+        79,
+        442,
+        415
+      ],
+      "source_url": "https://arcprize.org/api/sessions/65e10ad5-1ab4-43a1-aaa4-a3f69d48f50b",
+      "published_run": {
+        "id": "wa30-ee6fef47",
+        "score": 62.22222222222222,
+        "levels_completed": 7,
+        "actions": 882,
+        "state": "GAME_OVER",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          115,
+          0,
+          0
+        ],
+        "level_actions": [
+          27,
+          49,
+          80,
+          48,
+          122,
+          48,
+          48,
+          460,
+          0
+        ],
+        "level_baseline_actions": [
+          71,
+          119,
+          183,
+          98,
+          368,
+          68,
+          79,
+          442,
+          415
+        ]
+      }
+    },
+    "vc33-5430563c": {
+      "baseline_actions": [
+        7,
+        18,
+        44,
+        61,
+        131,
+        34,
+        152
+      ],
+      "source_url": "https://arcprize.org/api/sessions/341e58e4-2a66-45d2-99c2-676008fe699d",
+      "published_run": {
+        "id": "vc33-5430563c",
+        "score": 54.36440632834496,
+        "levels_completed": 6,
+        "actions": 651,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          60.49382716049383,
+          115,
+          115,
+          115,
+          79.41598408070712,
+          4.938271604938271,
+          0
+        ],
+        "level_actions": [
+          9,
+          11,
+          26,
+          25,
+          147,
+          153,
+          280
+        ],
+        "level_baseline_actions": [
+          7,
+          18,
+          44,
+          61,
+          131,
+          34,
+          152
+        ]
+      }
+    },
+    "sc25-635fd71a": {
+      "baseline_actions": [
+        36,
+        6,
+        32,
+        83,
+        143,
+        50
+      ],
+      "source_url": "https://arcprize.org/api/sessions/32942ae1-9c25-4e95-bb2a-5a2fa1376592",
+      "published_run": {
+        "id": "sc25-635fd71a",
+        "score": 42.02375121477162,
+        "levels_completed": 4,
+        "actions": 852,
+        "state": "GAME_OVER",
+        "level_scores": [
+          115,
+          73.46938775510203,
+          115,
+          68.89,
+          0,
+          0
+        ],
+        "level_actions": [
+          15,
+          7,
+          15,
+          100,
+          715,
+          0
+        ],
+        "level_baseline_actions": [
+          36,
+          6,
+          32,
+          83,
+          143,
+          50
+        ]
+      }
+    },
+    "ls20-9607627b": {
+      "baseline_actions": [
+        22,
+        123,
+        73,
+        84,
+        96,
+        192,
+        186
+      ],
+      "source_url": "https://arcprize.org/api/sessions/0b01848f-1038-4c75-bf63-33ec5918f6a7",
+      "published_run": {
+        "id": "ls20-9607627b",
+        "score": 35.714285714285715,
+        "levels_completed": 4,
+        "actions": 659,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          0,
+          0,
+          0
+        ],
+        "level_actions": [
+          17,
+          59,
+          41,
+          62,
+          480,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          22,
+          123,
+          73,
+          84,
+          96,
+          192,
+          186
+        ]
+      }
+    },
+    "su15-1944f8ab": {
+      "baseline_actions": [
+        22,
+        42,
+        26,
+        115,
+        36,
+        31,
+        8,
+        40,
+        41
+      ],
+      "source_url": "https://arcprize.org/api/sessions/847e1cfc-4d4f-47a2-b204-9eb54b030d8e",
+      "published_run": {
+        "id": "su15-1944f8ab",
+        "score": 22.22222222222222,
+        "levels_completed": 4,
+        "actions": 284,
+        "state": "GAME_OVER",
+        "level_scores": [
+          115,
+          115,
+          115,
+          115,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_actions": [
+          10,
+          11,
+          21,
+          62,
+          180,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          22,
+          42,
+          26,
+          115,
+          36,
+          31,
+          8,
+          40,
+          41
+        ]
+      }
+    },
+    "sk48-d8078629": {
+      "baseline_actions": [
+        61,
+        177,
+        101,
+        103,
+        230,
+        181,
+        125,
+        92
+      ],
+      "source_url": "https://arcprize.org/api/sessions/9fd68fca-3984-4d97-937d-83e7cdad4d94",
+      "published_run": {
+        "id": "sk48-d8078629",
+        "score": 18.89937996076685,
+        "levels_completed": 4,
+        "actions": 877,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          115,
+          72.41355399408283,
+          115,
+          18.887642649860243,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_actions": [
+          14,
+          208,
+          80,
+          237,
+          338,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          61,
+          177,
+          101,
+          103,
+          230,
+          181,
+          125,
+          92
+        ]
+      }
+    },
+    "lf52-271a04aa": {
+      "baseline_actions": [
+        32,
+        81,
+        60,
+        71,
+        205,
+        148,
+        244,
+        109,
+        164,
+        225
+      ],
+      "source_url": "https://arcprize.org/api/sessions/cb21f97a-2ab9-49f5-82ee-cb8d5266546e",
+      "published_run": {
+        "id": "lf52-271a04aa",
+        "score": 5.454545454545454,
+        "levels_completed": 2,
+        "actions": 355,
+        "state": "NOT_FINISHED",
+        "level_scores": [
+          115,
+          115,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_actions": [
+          8,
+          47,
+          300,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          32,
+          81,
+          60,
+          71,
+          205,
+          148,
+          244,
+          109,
+          164,
+          225
+        ]
+      }
+    },
+    "tu93-0768757b": {
+      "baseline_actions": [
+        19,
+        16,
+        34,
+        42,
+        123,
+        80,
+        14,
+        23,
+        111
+      ],
+      "source_url": "https://arcprize.org/api/sessions/3f7af87e-66da-4082-a099-3f9f4c3a5e73",
+      "published_run": {
+        "id": "tu93-0768757b",
+        "score": 2.2222222222222223,
+        "levels_completed": 1,
+        "actions": 67,
+        "state": "GAME_OVER",
+        "level_scores": [
+          111.41975308641976,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_actions": [
+          18,
+          49,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          19,
+          16,
+          34,
+          42,
+          123,
+          80,
+          14,
+          23,
+          111
+        ]
+      }
+    },
+    "bp35-0a0ad940": {
+      "baseline_actions": [
+        21,
+        48,
+        44,
+        38,
+        33,
+        87,
+        86,
+        131,
+        163
+      ],
+      "source_url": "https://arcprize.org/api/sessions/9e7a4382-f1cb-460e-a88a-498070e6a923",
+      "published_run": {
+        "id": "bp35-0a0ad940",
+        "score": 1.7013888888888888,
+        "levels_completed": 1,
+        "actions": 264,
+        "state": "GAME_OVER",
+        "level_scores": [
+          76.5625,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_actions": [
+          24,
+          240,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          21,
+          48,
+          44,
+          38,
+          33,
+          87,
+          86,
+          131,
+          163
+        ]
+      }
+    },
+    "g50t-5849a774": {
+      "baseline_actions": [
+        78,
+        175,
+        179,
+        230,
+        96,
+        54,
+        67
+      ],
+      "source_url": "https://arcprize.org/api/sessions/968592dd-dcab-4b46-9324-34e4097b8309",
+      "published_run": {
+        "id": "g50t-5849a774",
+        "score": 0,
+        "levels_completed": 0,
+        "actions": 390,
+        "state": "GAME_OVER",
+        "level_scores": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_actions": [
+          390,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "level_baseline_actions": [
+          78,
+          175,
+          179,
+          230,
+          96,
+          54,
+          67
+        ]
+      }
+    }
+  }
+}

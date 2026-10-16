@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "wall_seconds": 575.2057390000118,
+  "counts": {
+    "actual_game_actions": 34856,
+    "level_completion_rewards": 1,
+    "game_over_penalties": 0,
+    "sampled_decisions": 35355,
+    "invalid_actions": 499,
+    "episodes": 645
+  },
+  "optimizer_updates": 644,
+  "generator_parameter_delta_l2": 3.373645305633545,
+  "frozen_tokenizer_unchanged": true,
+  "real_frame_chains_verified": true,
+  "visible_rewards_verified": true,
+  "on_policy_losses_verified": true,
+  "neural_backend": "Device(gpu, 0)",
+  "process_duty": 0.7627556487952857,
+  "scope": "LS20 gameplay training evidence; not a held-out benchmark or Kaggle score"
+}

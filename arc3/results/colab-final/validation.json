@@ -1,0 +1,90 @@
+{
+  "archive": "0023-20261015T221304Z-1-001.zip",
+  "archive_sha256": "f78a2da8f1368857da79bb81fb9e4d9b9c858281bb8261a7d1512ebf334caa2c",
+  "checkpoint": "arc3/results/colab-final/block-0023/checkpoint",
+  "attempt_index": 23,
+  "displayed_block_number": 24,
+  "successful_block_count_for_whole_run": null,
+  "successful_block_count_limitation": "The run ledger is not included. Block number counts scheduled attempts, including failed ones.",
+  "integrity": "passed",
+  "input_archive_and_checkpoint_files_unchanged": true,
+  "gpu_backend_tested_here": "Metal",
+  "mlx_version": "0.32.4",
+  "gpu_reload_controls": {
+    "status": "PASS",
+    "count": 4
+  },
+  "cpu_neural_inference": false,
+  "torch_imported": false,
+  "recorded_final_block": {
+    "status": "passed_for_available_evidence",
+    "archive_hashes": "passed",
+    "tensor_headers_and_finite_values": {
+      "generator.safetensors": {
+        "tensors": 44,
+        "stored_values": 204608,
+        "finite": "passed"
+      },
+      "tokenizer.safetensors": {
+        "tensors": 30,
+        "stored_values": 104352,
+        "finite": "passed"
+      }
+    },
+    "recorded_frame_reward_and_on_policy_loss_checks": "passed",
+    "trace_counts": {
+      "actual_game_actions": 27082,
+      "level_completion_rewards": 0,
+      "game_over_penalties": 0,
+      "sampled_decisions": 27083,
+      "episodes": 213,
+      "invalid_actions": 1
+    },
+    "optimizer_updates_verified": 72,
+    "termination_counts": {
+      "horizon": 211,
+      "invalid_action": 1,
+      "training_deadline": 1
+    },
+    "reward_driven_updates": 1,
+    "baseline_only_updates": 71,
+    "zero_gradient_episodes": 140,
+    "internal_checkpoint_save_calls": 11,
+    "previous_checkpoint_weight_bytes_verified": false,
+    "limitation": "Block 0022 weights and the run ledger are absent, so previous-weight bytes, parameter delta and the full run chain cannot be independently recomputed. The declared prior hashes match between the supplied manifest, stats and provenance.",
+    "scope": "Checkpoint and final-block recorded training evidence; game performance is checked separately."
+  },
+  "frozen_public_game_evaluation": {
+    "verification": "passed",
+    "games": 25,
+    "levels": 183,
+    "completed_levels": 0,
+    "score_percent": 0.0,
+    "actions": 2777,
+    "seed": 0,
+    "human_action_budget_multiplier": 5.0,
+    "termination_counts": {
+      "level_action_budget": 13,
+      "policy_failure": 12
+    },
+    "policy_failure_reasons": {
+      "prefix_capacity_overflow": 5,
+      "unavailable_action": 5,
+      "coordinates_on_nonclick_action": 2
+    },
+    "ls20": {
+      "game_id": "ls20-9607627b",
+      "completed_levels": 0,
+      "sdk_actions": 110,
+      "score": 0.0,
+      "termination": "level_action_budget"
+    },
+    "headless": true,
+    "network_disabled": true,
+    "new_training": false,
+    "scope": "One frozen run on the pinned 25 public development games; not a Kaggle score."
+  },
+  "archived_block": "arc3/results/colab-final/block-0023",
+  "frozen_evaluation_directory": "arc3/results/colab-final/frozen-evaluation",
+  "frozen_evaluation_trace_uncompressed_sha256": "055af2f6f560cf0ca50c66af17549beeb3df68f1c2520242567f4daa29ae35b3"
+}

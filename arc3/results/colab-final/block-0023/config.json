@@ -1,0 +1,26 @@
+{
+  "baseline": "EWMA of previous episode returns only",
+  "baseline_decay": 0.9,
+  "checkpoint": "/content/drive/MyDrive/arc3-ncm/arc3-ls20-4h-v2/blocks/0022/checkpoint",
+  "cpu_neural_training": false,
+  "duty_is_soft_pacing": true,
+  "duty_target": 0.8,
+  "environments_dir": "/content/ncm-puzzles-colab/data/arcagi3/evaluation_public/environment_files",
+  "fixed_loss_normalizer": 128,
+  "frozen_tokenizer": true,
+  "gamma": 0.99,
+  "gradient_clip_norm": 1.0,
+  "horizon": 128,
+  "learning_rate": 0.0001,
+  "max_seconds": 600.0,
+  "microbatch_size": 4,
+  "objective": "-sum_t(gamma^t*(G_t-baseline_previous)*sum_22_code_log_probabilities)/128",
+  "reward": {
+    "invalid_action": -1,
+    "visible_game_over": -1,
+    "visible_level_completion": 1
+  },
+  "seed": 2300042,
+  "temperature": 1.5,
+  "training_backend": "MLX GPU"
+}

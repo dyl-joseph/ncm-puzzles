@@ -1,0 +1,1 @@
+{"status":"passed","independent_tensor_comparison":true,"device":"Device(gpu, 0)","generator_parameter_delta_l2":3.373645305633545,"changed_tensors":44,"tokenizer_unchanged":true,"torch_imported":false}

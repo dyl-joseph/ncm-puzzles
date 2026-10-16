@@ -1,0 +1,52 @@
+{
+  "checks": [
+    {
+      "event_guid": "87e2495f-5010-4c20-bd86-b2ba231157d5",
+      "index": 0,
+      "prediction_exact": true,
+      "prefix_exact": true
+    },
+    {
+      "event_guid": "8aed7120-f7a9-45a1-837a-68bc7dc37a4f",
+      "index": 1,
+      "prediction_exact": true,
+      "prefix_exact": true
+    },
+    {
+      "event_guid": "8aed7120-f7a9-45a1-837a-68bc7dc37a4f",
+      "index": 2,
+      "prediction_exact": true,
+      "prefix_exact": true
+    },
+    {
+      "event_guid": "8aed7120-f7a9-45a1-837a-68bc7dc37a4f",
+      "index": 3,
+      "prediction_exact": true,
+      "prefix_exact": true
+    }
+  ],
+  "cold_start_history": [
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0
+    ]
+  ],
+  "fixture_sha256": "5c064ad40c73d85c934a41493215897156e1471433dfff05a277ca529088341b",
+  "status": "PASS"
+}

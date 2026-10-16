@@ -1,0 +1,17 @@
+{
+  "arc3/results/gameplay-training/game-trace.jsonl.xz": {
+    "compressed_bytes": 5178156,
+    "compressed_sha256": "9d5f5ef0f39b599f016b7e17c039495a1701446cb800ce5f32a1e561828be1ee",
+    "uncompressed_bytes": 642394946
+  },
+  "arc3/results/gameplay-training/training.jsonl.xz": {
+    "compressed_bytes": 371000,
+    "compressed_sha256": "af93f81a8558d2331b97bb1ba5eee62237b917155ecbe5dd77df3213e3b1bf36",
+    "uncompressed_bytes": 1519688
+  },
+  "arc3/results/gameplay-trained-eval/trace.jsonl.xz": {
+    "compressed_bytes": 254380,
+    "compressed_sha256": "3dbfc7bf92baa4056425ce180d2f0407215fda7e579c0abe78c6c60cab34265f",
+    "uncompressed_bytes": 41076107
+  }
+}
